@@ -1110,6 +1110,10 @@
 .admin-btn-approve { background: var(--wa); color: #fff; }
 .admin-btn-reject { background: #fee2e2; color: #b91c1c; }
 .admin-empty { text-align: center; color: #64748b; padding: 24px 0; }
+    .admin-gencode-box {
+  background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px;
+  padding:14px; margin-bottom:16px;
+}
     .games-modal {
       visibility: hidden; opacity: 0; pointer-events: none;
       position: fixed; inset: 0;
@@ -2108,6 +2112,15 @@
     <!-- Pending submissions screen -->
     <div id="adminPendingView" style="display:none;">
       <div class="admin-title">🗂️ Pending Submissions</div>
+      <div class="admin-gencode-box">
+  <h4 style="margin:0 0 8px;font-size:0.9rem;color:#0f172a;">🎟️ Generate Bulk Code</h4>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;">
+    <input type="text" id="genCodeInput" placeholder="Code (optional, auto if blank)" style="flex:1;min-width:140px;padding:8px 10px;border:1.5px solid #e2e8f0;border-radius:8px;">
+    <input type="number" id="genUsesInput" placeholder="Uses" value="10" min="1" style="width:70px;padding:8px 10px;border:1.5px solid #e2e8f0;border-radius:8px;">
+    <button id="genCodeBtn" class="admin-pass-btn" style="width:auto;padding:8px 16px;">Generate</button>
+  </div>
+  <div id="genCodeResult" style="margin-top:8px;font-size:0.82rem;font-weight:700;display:none;"></div>
+</div>
       <div id="adminPendingList"></div>
     </div>
   </div>
@@ -2791,13 +2804,45 @@ async function handleAdminListClick(e) {
     btn.textContent = action === "approve" ? "✅ Approve" : "🗑️ Reject";
   }
 }
+async function generateBulkCode() {
+  var codeInput = document.getElementById("genCodeInput");
+  var usesInput = document.getElementById("genUsesInput");
+  var resultEl  = document.getElementById("genCodeResult");
+  var pass = sessionStorage.getItem("ghAdminPass") || "";
+  var code = (codeInput && codeInput.value.trim()) || "";
+  var uses = parseInt((usesInput && usesInput.value) || "10", 10) || 10;
 
+  var btn = document.getElementById("genCodeBtn");
+  if (btn) { btn.disabled = true; btn.textContent = "…"; }
+
+  try {
+    var res = await fetch("https://imnzgzusnghppgbgfdsh.supabase.co/functions/v1/admin-action", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password: pass, action: "gencode", code: code || undefined, uses: uses })
+    });
+    var json = await res.json();
+    if (!res.ok) throw new Error(json.error || "Failed to generate code");
+
+    resultEl.style.display = "block";
+    resultEl.style.color = "#166534";
+    resultEl.textContent = "✅ Code created: " + json.code + " (" + uses + " uses)";
+    if (codeInput) codeInput.value = "";
+  } catch (err) {
+    resultEl.style.display = "block";
+    resultEl.style.color = "#b91c1c";
+    resultEl.textContent = "❌ " + (err.message || "Failed");
+  }
+
+  if (btn) { btn.disabled = false; btn.textContent = "Generate"; }
+}
 function initAdminPanel() {
   var closeBtn = document.getElementById("adminCloseBtn");
   var loginBtn = document.getElementById("adminLoginBtn");
   var passInput = document.getElementById("adminPassInput");
   var overlay = document.getElementById("adminOverlay");
   var list = document.getElementById("adminPendingList");
+  var genBtn = document.getElementById("genCodeBtn"); // NEW
 
   if (closeBtn) closeBtn.addEventListener("click", closeAdminPanel);
   if (overlay) overlay.addEventListener("click", function(e) {
@@ -2808,6 +2853,7 @@ function initAdminPanel() {
     if (e.key === "Enter") { e.preventDefault(); attemptAdminLogin(); }
   });
   if (list) list.addEventListener("click", handleAdminListClick);
+  if (genBtn) genBtn.addEventListener("click", generateBulkCode); // NEW
 }
 
 function initDockMagnify(container, selector) {
