@@ -2858,59 +2858,68 @@ function initAdminPanel() {
 
 function initDockMagnify(container, selector) {
   var tiles = Array.prototype.slice.call(container.querySelectorAll(selector));
-  var maxScale = 1.9;
-  var falloff = 90;
+  if (!tiles.length) return;
+
   var isCoarsePointer = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-  if (isCoarsePointer || !tiles.length) return;
+  if (isCoarsePointer) return;
 
-  function applyMagnify(mouseX) {
-    var closestTile = null;
-    var closestDist = Infinity;
+  var maxScale  = 1.55;   // peak scale for the hovered icon
+  var falloff   = 130;    // px radius of influence — wider = smoother wave
+  var liftPx    = 14;     // how far the icon rises, mac-dock style
+  var rafId     = null;
+  var lastX     = null;
 
-    // First pass: find the single closest tile to the pointer
+  // Group tiles by row (their top offset) so the wave never reaches
+  // into a second line — each row is animated completely independently.
+  function getRowOf(tile) {
+    return Math.round(tile.getBoundingClientRect().top);
+  }
+
+  function apply(mouseX, mouseY) {
     tiles.forEach(function(tile) {
       var rect = tile.getBoundingClientRect();
-      var tileCenter = rect.left + rect.width / 2;
-      var dist = Math.abs(mouseX - tileCenter);
-      if (dist < closestDist) {
-        closestDist = dist;
-        closestTile = tile;
-      }
-    });
 
-    // Second pass: only the closest tile gets scaled — everyone else resets
-    tiles.forEach(function(tile) {
-      if (tile === closestTile && closestDist < falloff) {
-        var t = 1 - closestDist / falloff;
-        var eased = Math.sin((t * Math.PI) / 2);
+      // Only affect icons in the row the pointer is actually over.
+      var withinRow = mouseY >= rect.top - 20 && mouseY <= rect.bottom + 20;
+      var center = rect.left + rect.width / 2;
+      var dist = Math.abs(mouseX - center);
+
+      if (withinRow && dist < falloff) {
+        var t = 1 - dist / falloff;
+        var eased = Math.sin((t * Math.PI) / 2); // smooth cosine-style falloff, like macOS
         var scale = 1 + (maxScale - 1) * eased;
-        var rect = tile.getBoundingClientRect();
-        var marginPx = (scale - 1) * (rect.width / 2);
+        var lift  = liftPx * eased;
 
-        tile.style.transform = "scale(" + scale.toFixed(3) + ")";
-        tile.style.marginLeft = marginPx.toFixed(1) + "px";
-        tile.style.marginRight = marginPx.toFixed(1) + "px";
-        tile.classList.add("dock-active");
+        tile.style.transform = "translateY(-" + lift.toFixed(1) + "px) scale(" + scale.toFixed(3) + ")";
+        tile.style.zIndex = Math.round(10 + eased * 20);
+        tile.classList.toggle("dock-active", dist < 24); // label only pops on the true nearest icon
       } else {
-        tile.style.transform = "scale(1)";
-        tile.style.marginLeft = "";
-        tile.style.marginRight = "";
+        tile.style.transform = "translateY(0) scale(1)";
+        tile.style.zIndex = "";
         tile.classList.remove("dock-active");
       }
     });
   }
 
-  function resetMagnify() {
+  function reset() {
     tiles.forEach(function(tile) {
-      tile.style.transform = "scale(1)";
-      tile.style.marginLeft = "";
-      tile.style.marginRight = "";
+      tile.style.transform = "translateY(0) scale(1)";
+      tile.style.zIndex = "";
       tile.classList.remove("dock-active");
     });
   }
 
-  container.addEventListener("mousemove", function(e) { applyMagnify(e.clientX); });
-  container.addEventListener("mouseleave", resetMagnify);
+  container.addEventListener("mousemove", function(e) {
+    lastX = e.clientX;
+    var y = e.clientY;
+    if (rafId) return;
+    rafId = requestAnimationFrame(function() {
+      apply(lastX, y);
+      rafId = null;
+    });
+  });
+
+  container.addEventListener("mouseleave", reset);
 }
 function openGamesModal() {
   renderGamesGrid();
