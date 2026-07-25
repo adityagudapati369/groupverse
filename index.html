@@ -1469,11 +1469,11 @@
       <div class="filter-item"><label>Type</label>
         <select id="filterType">
           <option value="all">📌 All formats</option>
-          <option value="telegram_channel">🌟 Verified</option>
           <option value="whatsapp_group">💬 WhatsApp Group</option>
           <option value="whatsapp_channel">📢 WhatsApp Channel</option>
           <option value="telegram_group">✈️ Telegram Group</option>
           <option value="telegram_channel">📡 Telegram Channel</option>
+          <option value="verified">🌟 Verified Only</option>
         </select>
       </div>
       <div class="filter-item"><label>Category</label>
@@ -3412,7 +3412,11 @@ function applyFilters() {
   var langVal    = langEl    ? langEl.value    : "all";
   var searchVal  = searchEl  ? searchEl.value.trim().toLowerCase() : "";
 
-  if (typeVal    !== "all") filtered = filtered.filter(function(g){ return g.platform_type === typeVal; });
+ if (typeVal === "verified") {
+    filtered = filtered.filter(function(g){ return g.is_verified === true; });
+  } else if (typeVal !== "all") {
+    filtered = filtered.filter(function(g){ return g.platform_type === typeVal; });
+  }
   if (catVal     !== "all") filtered = filtered.filter(function(g){ return g.category === catVal; });
   if (countryVal !== "all") filtered = filtered.filter(function(g){ return g.country === countryVal; });
   if (langVal    !== "all") filtered = filtered.filter(function(g){ return g.language === langVal; });
