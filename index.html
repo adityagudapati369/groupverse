@@ -1393,6 +1393,21 @@
       border-width: 2.5px;
       box-shadow: 0 10px 28px -10px rgba(245,158,11,0.45);
     }
+    /* ==== PREMIUM FEATURES — verified badge + priority chip + bulk code input (NEW) ==== */
+.badge-verified {
+  background: linear-gradient(115deg,#dbeafe,#bfdbfe); color: #1d4ed8;
+  font-size: 0.65rem; font-weight: 800; padding: 3px 9px; border-radius: 30px;
+  margin-left: 6px; display: inline-flex; align-items: center; gap: 3px;
+}
+.admin-priority-chip {
+  background: #fef3c7; color: #92400e; font-size: 0.7rem; font-weight: 800;
+  padding: 2px 10px; border-radius: 20px; display: inline-block; margin-bottom: 6px;
+}
+.bulk-code-row { display:flex; gap:8px; align-items:center; margin-top:10px; }
+.bulk-code-row input { flex:1; }
+.bulk-code-status { font-size:0.75rem; margin-top:6px; font-weight:700; display:none; }
+.bulk-code-status.ok { color:#166534; display:block; }
+.bulk-code-status.bad { color:#b91c1c; display:block; }
     </style>
     <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JQTHYZE215"></script>
@@ -1432,6 +1447,10 @@
 <button type="button" class="games-promo-banner" id="openGamesBtn">
   <div class="gp-text"><i class="fas fa-gamepad"></i><span>Need a quick timepass? <strong>Play free games</strong> right here — no download needed.</span></div>
   <span class="gp-btn">Play Now →</span>
+</button>
+  <button type="button" class="games-promo-banner" id="openPremiumBtn" style="background:linear-gradient(120deg,#7c3aed,#2563eb);">
+  <div class="gp-text"><i class="fas fa-crown"></i><span>Want faster review, a <strong>Verified badge</strong>, or <strong>bulk submissions</strong>? Check our low-cost plans.</span></div>
+  <span class="gp-btn">View Plans →</span>
 </button>
   <div class="games-dock-wrap">
   <div class="games-dock-title">🎮 Quick Play — Click any game to launch</div>
@@ -2023,7 +2042,17 @@
         </div>
       </div>
       <p class="form-hint">Press Enter or tap Add · max 8 tags</p>
+<label><i class="fas fa-ticket"></i> Bulk Code <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(optional — only if you bought a Bulk Pack)</span></label>
+<div class="bulk-code-row">
+  <input type="text" id="bulkCodeInput" placeholder="e.g., GV-AB12CD" autocomplete="off" maxlength="20">
+  <button type="button" id="bulkCodeCheckBtn" class="btn-outline-light" style="white-space:nowrap;padding:9px 16px;">Apply</button>
+</div>
+<div class="bulk-code-status" id="bulkCodeStatus"></div>
 
+<label style="display:flex;align-items:center;gap:8px;margin-top:16px;cursor:pointer;">
+  <input type="checkbox" id="priorityRequestCheckbox" style="width:auto;">
+  <span style="font-weight:600;text-transform:none;letter-spacing:0;font-size:0.85rem;color:var(--ink-soft);">⚡ I've paid for Priority Review (₹19) — flag this for faster approval</span>
+</label>
       <!-- ── Honeypot: hidden from real users; bots fill it in ── -->
       <div style="position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;height:0;overflow:hidden" aria-hidden="true">
         <label for="website_url">Website (leave blank)</label>
@@ -2150,7 +2179,73 @@
     <div class="games-grid" id="gamesGrid"></div>
   </div>
 </div>
+<div id="premiumModal" class="advertise-modal" role="dialog" aria-modal="true">
+  <div class="advertise-card">
+    <button class="close-advertise" id="closePremiumBtn" aria-label="Close"><i class="fas fa-times"></i></button>
 
+    <h3>👑 Premium Add-ons</h3>
+    <p class="advertise-subtitle">Low-cost boosts for group owners — pay once via UPI/USDT, then send your payment screenshot on WhatsApp with the plan name.</p>
+
+    <div class="pricing-plans">
+      <div class="pricing-plan">
+        <div class="plan-info">
+          <div class="plan-name">⚡ Priority Review</div>
+          <div class="plan-desc">Skip the queue — your group gets reviewed first</div>
+        </div>
+        <div class="plan-price"><div class="price-main">₹19</div><div class="price-sub">one-time</div></div>
+      </div>
+
+      <div class="pricing-plan popular">
+        <div class="popular-tag">🔥 Most Popular</div>
+        <div class="plan-info">
+          <div class="plan-name">✅ Verified Badge</div>
+          <div class="plan-desc">Blue verified tick next to your group name — builds trust</div>
+        </div>
+        <div class="plan-price"><div class="price-main">₹49</div><div class="price-sub">one-time</div></div>
+      </div>
+
+      <div class="pricing-plan">
+        <div class="plan-info">
+          <div class="plan-name">📦 Bulk Submission Pack</div>
+          <div class="plan-desc">Submit 10 groups without CAPTCHA/cooldown limits</div>
+        </div>
+        <div class="plan-price"><div class="price-main">₹99</div><div class="price-sub">10 slots</div></div>
+      </div>
+    </div>
+
+    <div class="payment-section">
+      <h4><i class="fas fa-wallet"></i> Pay with USDT (BEP20 / BSC Network)</h4>
+      <div class="usdt-address-box">
+        <span class="chain-tag">BEP20 · Binance Smart Chain</span>
+        <div class="usdt-address-row">
+          <span class="usdt-address-text" id="premiumUsdtAddress">0xB475E090EbB96853Acfa7118AF39a0b9A6500447</span>
+          <button class="btn-copy-addr" id="premiumCopyAddrBtn" onclick="copyPremiumUsdtAddress()"><i class="fas fa-copy"></i> Copy</button>
+        </div>
+      </div>
+      <div class="usdt-address-box" style="margin-top:14px;">
+        <span class="chain-tag" style="background:#e0f7fa;color:#00796b;">UPI · India</span>
+        <div class="usdt-address-row">
+          <span class="usdt-address-text" id="premiumUpiId">emergencytikets@ptyes</span>
+          <button class="btn-copy-addr" id="premiumCopyUpiBtn" onclick="copyPremiumUpiId()"><i class="fas fa-copy"></i> Copy</button>
+        </div>
+      </div>
+      <div class="qr-section">
+        <p><i class="fas fa-qrcode"></i> Scan to pay with USDT</p>
+        <img id="premiumQrCodeImg" src="" alt="USDT BEP20 Payment QR Code">
+      </div>
+      <div class="advertise-note">
+        <i class="fas fa-info-circle" style="margin-top:2px;flex-shrink:0"></i>
+        <span>After paying, send your payment screenshot + <strong>group name</strong> + <strong>plan chosen</strong> to our WhatsApp. We'll activate your plan manually within 24 hours.</span>
+      </div>
+      <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px;">
+        <p style="font-size:0.8rem;font-weight:700;color:var(--ink-soft);margin-bottom:4px;"><i class="fas fa-headset" style="color:var(--wa)"></i> Send proof on WhatsApp</p>
+        <a href="https://wa.me/919391783528" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(95deg,#25D366,#128C7E);color:white;text-decoration:none;padding:9px 18px;border-radius:40px;font-weight:700;font-size:0.82rem;width:fit-content;">
+          <i class="fab fa-whatsapp"></i> +91 9391783528
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- ════════════════════════════════════════════════════════
      ADVERTISE / PRICING MODAL
 ════════════════════════════════════════════════════════ -->
@@ -2635,13 +2730,20 @@ function renderPendingList(rows) {
     return;
   }
   list.innerHTML = rows.map(function(g) {
+    var priorityChip = g.priority_requested // NEW
+      ? '<span class="admin-priority-chip">⚡ Priority Requested</span>'
+      : "";
     return (
       '<div class="admin-pending-card" data-id="' + g.id + '">' +
+        priorityChip +
         '<h4>' + escapeAttr(g.name || "Untitled") + '</h4>' +
         '<p><strong>Link:</strong> ' + escapeAttr(g.link || "") + '</p>' +
         '<p><strong>Platform:</strong> ' + escapeAttr(g.platform_type || "") + '</p>' +
         '<p><strong>Category:</strong> ' + escapeAttr(g.category || "") + ' | <strong>Country:</strong> ' + escapeAttr(g.country || "") + '</p>' +
         '<p><strong>Description:</strong> ' + escapeAttr(g.description || "") + '</p>' +
+        '<label style="display:flex;align-items:center;gap:6px;margin:10px 0;font-size:0.82rem;font-weight:600;color:#334155;cursor:pointer;">' +
+          '<input type="checkbox" class="admin-verify-check" data-id="' + g.id + '" style="width:auto;"> Mark Verified on approve (paid ₹49)' +
+        '</label>' +
         '<div class="admin-pending-actions">' +
           '<button class="admin-btn-approve" data-action="approve" data-id="' + g.id + '">✅ Approve</button>' +
           '<button class="admin-btn-reject" data-action="reject" data-id="' + g.id + '">🗑️ Reject</button>' +
@@ -2656,6 +2758,12 @@ async function handleAdminListClick(e) {
   var id = btn.getAttribute("data-id");
   var action = btn.getAttribute("data-action");
   var pass = sessionStorage.getItem("ghAdminPass") || "";
+
+  // NEW: read the "Mark Verified on approve" checkbox scoped to this card
+  var card = btn.closest(".admin-pending-card");
+  var verifyCheck = card ? card.querySelector(".admin-verify-check") : null;
+  var verify = verifyCheck ? verifyCheck.checked : false;
+
   btn.disabled = true;
   btn.textContent = "…";
 
@@ -2663,12 +2771,11 @@ async function handleAdminListClick(e) {
     var res = await fetch("https://imnzgzusnghppgbgfdsh.supabase.co/functions/v1/admin-action", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password: pass, action: action, id: id })
+      body: JSON.stringify({ password: pass, action: action, id: id, verify: verify })
     });
     var json = await res.json();
     if (!res.ok) throw new Error(json.error || "Action failed");
 
-    var card = btn.closest(".admin-pending-card");
     if (card) card.remove();
     var list = document.getElementById("adminPendingList");
     if (list && !list.children.length) {
@@ -2796,7 +2903,75 @@ function copyUsdtAddress() {
     }, 2000);
   }).catch(function() { showToast("❌ Copy failed", true); });
 }
+// ============================================================
+// PREMIUM MODAL — open/close + payment copy buttons (NEW)
+// ============================================================
+function openPremiumModal() {
+  var img = document.getElementById("premiumQrCodeImg");
+  if (img && !img.src) img.src = QR_IMAGE_B64;
+  var m = document.getElementById("premiumModal");
+  if (m) m.classList.add("open");
+}
+function closePremiumModal() {
+  var m = document.getElementById("premiumModal");
+  if (m) m.classList.remove("open");
+}
+function copyPremiumUsdtAddress() {
+  var addr = "0xB475E090EbB96853Acfa7118AF39a0b9A6500447";
+  var btn = document.getElementById("premiumCopyAddrBtn");
+  navigator.clipboard.writeText(addr).then(function() {
+    if (btn) { btn.innerHTML = '<i class="fas fa-check"></i> Copied!'; btn.classList.add("copied"); }
+    showToast("✅ USDT address copied!");
+    setTimeout(function() {
+      if (btn) { btn.innerHTML = '<i class="fas fa-copy"></i> Copy'; btn.classList.remove("copied"); }
+    }, 2000);
+  }).catch(function() { showToast("❌ Copy failed", true); });
+}
+function copyPremiumUpiId() {
+  var upi = "emergencytikets@ptyes";
+  var btn = document.getElementById("premiumCopyUpiBtn");
+  navigator.clipboard.writeText(upi).then(function() {
+    if (btn) { btn.innerHTML = '<i class="fas fa-check"></i> Copied!'; btn.classList.add("copied"); }
+    showToast("✅ UPI ID copied!");
+    setTimeout(function() {
+      if (btn) { btn.innerHTML = '<i class="fas fa-copy"></i> Copy'; btn.classList.remove("copied"); }
+    }, 2000);
+  }).catch(function() { showToast("❌ Copy failed", true); });
+}
 
+// ---- Bulk code redemption (NEW) ----
+var bulkCodeValidated = null;
+
+async function applyBulkCode() {
+  var input = document.getElementById("bulkCodeInput");
+  var statusEl = document.getElementById("bulkCodeStatus");
+  var code = (input && input.value.trim()) || "";
+  if (!code) return;
+  if (!supabaseClient) { showToast("Not connected to database", true); return; }
+
+  statusEl.className = "bulk-code-status";
+  statusEl.textContent = "Checking…";
+  statusEl.style.display = "block";
+
+  try {
+    var res = await supabaseClient.rpc("redeem_bulk_code", { input_code: code });
+    if (res.error) throw res.error;
+    if (res.data === true) {
+      bulkCodeValidated = code;
+      statusEl.className = "bulk-code-status ok";
+      statusEl.textContent = "✅ Code applied — CAPTCHA & cooldown skipped for this submission.";
+      var captchaWrap = document.querySelector(".math-captcha-wrap");
+      if (captchaWrap) captchaWrap.style.display = "none";
+    } else {
+      bulkCodeValidated = null;
+      statusEl.className = "bulk-code-status bad";
+      statusEl.textContent = "❌ Invalid or fully-used code.";
+    }
+  } catch (e) {
+    statusEl.className = "bulk-code-status bad";
+    statusEl.textContent = "❌ Could not verify code, try again.";
+  }
+}
 // ---- Math CAPTCHA state ----
 // A pool of arithmetic questions. generateCaptcha() picks one randomly each time.
 var CAPTCHA_POOL = [
@@ -3100,8 +3275,9 @@ if (g.logo_url) {
     var clickCount = g.click_count || 0;
     var isPopular  = clickCount >= 20;
     var statusBadgeHtml =
-      (isNew     ? '<span class="badge-new">🆕 New</span>' : '') +
-      (isPopular ? '<span class="badge-popular">🔥 Popular</span>' : '');
+  (isNew         ? '<span class="badge-new">🆕 New</span>' : '') +
+  (isPopular     ? '<span class="badge-popular">🔥 Popular</span>' : '') +
+  (g.is_verified ? '<span class="badge-verified"><i class="fas fa-check-circle"></i> Verified</span>' : ''); // NEW
     var joinCounterHtml = '<span class="join-counter"><i class="fas fa-users"></i> ' + clickCount + ' joined</span>';
     return (
       '<div class="group-card" style="animation-delay:' + delay + 's">' +
@@ -3345,7 +3521,6 @@ async function submitGroup() {
   var errorEl = document.getElementById("submitFormError");
   if (errorEl) errorEl.style.display = "none";
 
-  // ---- Collect form values ----
   var platform_type = (document.getElementById("modalTypeSelect")    || {}).value || "whatsapp_group";
   var name          = ((document.getElementById("modalName")          || {}).value || "").trim();
   var link          = ((document.getElementById("modalLink")          || {}).value || "").trim();
@@ -3364,64 +3539,62 @@ async function submitGroup() {
   }
   var description = ((document.getElementById("modalDesc") || {}).value || "").trim() || "Active and engaging community.";
 
-  // ---- Helper to surface errors in the form ----
+  // NEW: read priority checkbox
+  var priorityRequested = (document.getElementById("priorityRequestCheckbox") || {}).checked || false;
+
   function showErr(msg) {
     if (errorEl) { errorEl.textContent = msg; errorEl.style.display = "block"; }
   }
 
-  // ---- Honeypot check — bots fill the hidden field; humans never see it ----
   var honeypot = document.getElementById("website_url");
   if (honeypot && honeypot.value.trim() !== "") {
-    // Silently succeed so bots don't know they were caught
     showSubmitSuccess();
     return;
   }
 
-  // ---- Client-side rate-limit (soft cooldown) ----
-  var cooldownMsg = checkSubmitCooldown();
-  if (cooldownMsg) { showErr(cooldownMsg); return; }
+  // NEW: skip cooldown entirely if a valid bulk code was applied
+  if (!bulkCodeValidated) {
+    var cooldownMsg = checkSubmitCooldown();
+    if (cooldownMsg) { showErr(cooldownMsg); return; }
+  }
 
-  // ---- Client-side validation ----
   if (!name || !link)             { showErr("Name and invite link are required."); return; }
   if (!/^https:\/\//i.test(link)) { showErr("Invite link must start with https://"); return; }
   if (logo_url && !/^https:\/\//i.test(logo_url)) { showErr("Logo URL must start with https://"); return; }
   if (!supabaseClient)            { showErr("Not connected to database. Please refresh and try again."); return; }
-// ---- Reject any link that isn't WhatsApp or Telegram at all, with a friendly message ----
+
   var isAnyWhatsappLink = /^https:\/\/(chat\.whatsapp\.com\/|(www\.)?whatsapp\.com\/channel\/)/i.test(link);
   var isAnyTelegramLink = /^https:\/\/(www\.)?t\.me\//i.test(link);
   if (!isAnyWhatsappLink && !isAnyTelegramLink) {
     showErr("⚠️ Invalid WhatsApp or Telegram link. Enter real group/channel invite link.");
     return;
-  }// ---- Link must match the selected platform type (blocks WA↔TG mixing & group↔channel mixing) ----
+  }
+
   var isWhatsappGroupLink   = /^https:\/\/chat\.whatsapp\.com\//i.test(link) && !/\/channel\//i.test(link);
   var isWhatsappChannelLink = /^https:\/\/(www\.)?whatsapp\.com\/channel\//i.test(link);
   var isTelegramLink        = /^https:\/\/(www\.)?t\.me\//i.test(link);
 
   if (platform_type === "whatsapp_group" && !isWhatsappGroupLink) {
-    showErr("⚠️ Invalid Whatsapp group link");
-    return;
+    showErr("⚠️ Invalid Whatsapp group link"); return;
   }
   if (platform_type === "whatsapp_channel" && !isWhatsappChannelLink) {
-    showErr("⚠️ Invalid Whatsapp channel link");
-    return;
+    showErr("⚠️ Invalid Whatsapp channel link"); return;
   }
   if ((platform_type === "telegram_group" || platform_type === "telegram_channel") && !isTelegramLink) {
-    showErr("⚠️ Invalid Telegram group/channel link");
-    return;
+    showErr("⚠️ Invalid Telegram group/channel link"); return;
   }
-  // ---- CAPTCHA gate — math question must be answered correctly ----
-  if (!verifyCaptcha()) {
+
+  // NEW: skip CAPTCHA entirely if a valid bulk code was applied
+  if (!bulkCodeValidated && !verifyCaptcha()) {
     showErr("⚠️ Please answer the math question correctly before submitting.");
     return;
   }
 
-  // ---- Disable button & show spinner ----
   var btn = document.getElementById("submitGroupFinalBtn");
   var originalLabel = btn ? btn.innerHTML : "";
   if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking…'; }
 
   try {
-    // ---- STEP 1: Duplicate check — query groups table for existing link ----
     var dupCheck = await supabaseClient
       .from("groups")
       .select("id", { count: "exact", head: true })
@@ -3429,15 +3602,12 @@ async function submitGroup() {
 
     if (dupCheck.error) throw dupCheck.error;
 
-    // dupCheck.count > 0 means the link already exists
     if (dupCheck.count !== null && dupCheck.count > 0) {
       showErr("⚠️ This group/channel link is already in the directory.");
       if (btn) { btn.disabled = false; btn.innerHTML = originalLabel; }
       return;
     }
 
-    // ---- STEP 2: Insert directly into groups (live immediately) ----
-    // ---- Auto-fetch group/channel DP if user didn't provide one ----
     if (!logo_url) {
       try {
         var iconRes = await fetch("https://imnzgzusnghppgbgfdsh.supabase.co/functions/v1/fetch-group-icon", {
@@ -3453,12 +3623,6 @@ async function submitGroup() {
     }
     if (btn) btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding…';
 
-    // SECURITY: is_approved / is_active are intentionally NOT set here.
-    // The client must never be trusted to assert its own approval/active
-    // status — those flags should come from the database's own column
-    // defaults (e.g. both defaulting to false until a moderator approves
-    // the listing) or a server-side function/RLS policy, never from a
-    // value the browser sends.
     var result = await supabaseClient.from("groups").insert([{
       name:          name,
       link:          link,
@@ -3469,34 +3633,38 @@ async function submitGroup() {
       category:      category,
       country:       country,
       language:      language,
-      tags:          currentTags.slice()
+      tags:          currentTags.slice(),
+      priority_requested: priorityRequested // NEW
     }]);
 
     if (result.error) throw result.error;
 
-    // ---- Record submission time for client-side cooldown ----
     recordSubmitTime();
 
-    // ---- STEP 3: Clear form fields ----
     ["modalName", "modalLink", "modalLogoUrl", "modalDesc"].forEach(function(id) {
       var el = document.getElementById(id);
       if (el) el.value = "";
     });
     currentTags = [];
     renderTagChips();
-
-    // ---- Reset CAPTCHA so a fresh question is ready next time ----
     generateCaptcha();
 
-    // ---- STEP 4: Show success screen ----
-    showSubmitSuccess();
+    // NEW: reset bulk-code + priority state, re-show CAPTCHA for next submission
+    bulkCodeValidated = null;
+    var bcInput = document.getElementById("bulkCodeInput");
+    var bcStatus = document.getElementById("bulkCodeStatus");
+    var prCheck = document.getElementById("priorityRequestCheckbox");
+    if (bcInput) bcInput.value = "";
+    if (bcStatus) bcStatus.style.display = "none";
+    if (prCheck) prCheck.checked = false;
+    var captchaWrap = document.querySelector(".math-captcha-wrap");
+    if (captchaWrap) captchaWrap.style.display = "block";
 
-    // ---- STEP 5: Reload groups in background so new card appears instantly ----
+    showSubmitSuccess();
     loadGroups();
 
   } catch (e) {
     console.error("submitGroup:", e);
-    // Catch DB-level unique violation (code 23505) as a friendly message
     if (e.code === "23505") {
       showErr("⚠️ This group/channel link is already in the directory.");
     } else {
@@ -3581,6 +3749,16 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // ---- Advertise modal ----
+  // ---- Premium modal (NEW) ----
+on("openPremiumBtn",   "click", openPremiumModal);
+on("closePremiumBtn",  "click", closePremiumModal);
+var premModal = document.getElementById("premiumModal");
+if (premModal) {
+  premModal.addEventListener("click", function(e) {
+    if (e.target === premModal) closePremiumModal();
+  });
+}
+on("bulkCodeCheckBtn", "click", applyBulkCode);
   on("openAdvertiseBtn",   "click", openAdvertiseModal);
   on("closeAdvertiseBtn",  "click", closeAdvertiseModal);
   var advModal = document.getElementById("advertiseModal");
@@ -3592,17 +3770,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Escape key closes all modals
   document.addEventListener("keydown", function(e) {
-    if (e.key === "Escape") {
-      var m  = document.getElementById("groupModal");
-      var fg = document.getElementById("followGateModal");
-      var ad = document.getElementById("advertiseModal");
-      var gm = document.getElementById("gamesModal");
-      if (m  && m.classList.contains("open"))  closeModal();
-      if (fg && fg.classList.contains("open")) closeFollowGate();
-      if (ad && ad.classList.contains("open")) closeAdvertiseModal();
-      if (gm && gm.classList.contains("open")) closeGamesModal();
-    }
-  });
+  if (e.key === "Escape") {
+    var m   = document.getElementById("groupModal");
+    var fg  = document.getElementById("followGateModal");
+    var ad  = document.getElementById("advertiseModal");
+    var gm  = document.getElementById("gamesModal");
+    var prm = document.getElementById("premiumModal"); // NEW
+    if (m   && m.classList.contains("open"))   closeModal();
+    if (fg  && fg.classList.contains("open"))  closeFollowGate();
+    if (ad  && ad.classList.contains("open"))  closeAdvertiseModal();
+    if (gm  && gm.classList.contains("open"))  closeGamesModal();
+    if (prm && prm.classList.contains("open")) closePremiumModal(); // NEW
+  }
+});
 
   // ---- Tags ----
   on("addTagBtn",      "click",   addTag);
