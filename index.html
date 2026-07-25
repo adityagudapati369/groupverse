@@ -2062,7 +2062,7 @@
       <div id="submitFormError" class="form-error"></div>
 
       <!-- Math CAPTCHA — generated client-side, no external service needed -->
-      <div class="math-captcha-wrap">
+      <div class="math-captcha-wrap" id="mathCaptchaWrap">
         <div class="math-captcha-label"><i class="fas fa-shield-alt"></i> Verify you're human</div>
         <div class="math-captcha-row">
           <div class="math-captcha-question" id="captchaQuestion">Loading…</div>
@@ -2964,7 +2964,7 @@ async function applyBulkCode() {
       bulkCodeValidated = code;
       statusEl.className = "bulk-code-status ok";
       statusEl.textContent = "✅ Code applied — CAPTCHA & cooldown skipped for this submission.";
-      var captchaWrap = document.querySelector(".math-captcha-wrap");
+      var captchaWrap = document.getElementById("mathCaptchaWrap");
       if (captchaWrap) captchaWrap.style.display = "none";
     } else {
       bulkCodeValidated = null;
@@ -3661,7 +3661,7 @@ async function submitGroup() {
     if (bcInput) bcInput.value = "";
     if (bcStatus) bcStatus.style.display = "none";
     if (prCheck) prCheck.checked = false;
-    var captchaWrap = document.querySelector(".math-captcha-wrap");
+    var captchaWrap = document.getElementById("mathCaptchaWrap");
     if (captchaWrap) captchaWrap.style.display = "block";
 
     showSubmitSuccess();
