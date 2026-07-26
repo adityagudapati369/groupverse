@@ -2679,15 +2679,6 @@ function renderGamesDock() {
 // Generate it in the browser console with:
 //   crypto.subtle.digest("SHA-256", new TextEncoder().encode("yourpassword"))
 //     .then(b => console.log([...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")));
-var ADMIN_PASS_HASH = "5ca9e124df985d25a4c131d314a2f457b8466db083a407bdb4ec858221772096";
-
-async function sha256Hex(text) {
-  var buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
-  return Array.prototype.map.call(new Uint8Array(buf), function(b) {
-    return b.toString(16).padStart(2, "0");
-  }).join("");
-}
-
 function openAdminPanel() {
   var overlay = document.getElementById("adminOverlay");
   var box = document.getElementById("adminBox");
@@ -3365,6 +3356,7 @@ if (g.logo_url) {
           '<div class="card-actions">' +
             '<a href="' + escapeAttr(g.link) + '" target="_blank" rel="noopener noreferrer" class="join-link-btn ' + m.cls + '" data-id="' + escapeAttr(g.id) + '">' + m.label + '</a>' +
             '<button class="copy-icon-btn" data-link="' + escapeAttr(g.link) + '" title="Copy link" aria-label="Copy link"><i class="fas fa-copy"></i></button>' +
+            '<a href="mailto:abuse@groupverse.co.in?subject=' + encodeURIComponent("Report: " + g.name) + '&body=' + encodeURIComponent("Reporting this group:\n\nName: " + g.name + "\nLink: " + g.link + "\n\nReason: ") + '" class="copy-icon-btn" title="Report this group" aria-label="Report abuse" style="color:#b91c1c;"><i class="fas fa-flag"></i></a>' +
           '</div>' +
         '</div>' +
       '</div>'
