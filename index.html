@@ -2249,7 +2249,7 @@
       </div>
       <div class="qr-section">
         <p><i class="fas fa-qrcode"></i> Scan to pay with USDT</p>
-        <img id="qrCodeImg" src="" alt="USDT BEP20 Payment QR Code">
+        <img id="qrCodeImg" src="/assets/usdt-qr.png" alt="USDT BEP20 Payment QR Code">
       </div>
       <div class="qr-section">
         <p><i class="fas fa-qrcode"></i> Or scan to pay with UPI</p>
@@ -2346,7 +2346,7 @@
 
       <div class="qr-section">
         <p><i class="fas fa-qrcode"></i> Scan to pay with USDT</p>
-        <img id="qrCodeImg" src="" alt="USDT BEP20 Payment QR Code">
+        <img id="qrCodeImg" src="/assets/usdt-qr.png" alt="USDT BEP20 Payment QR Code">
       </div>
 
       <div class="qr-section">
@@ -2972,8 +2972,9 @@ function copyUsdtAddress() {
 // PREMIUM MODAL — open/close + payment copy buttons (NEW)
 // ============================================================
 function openPremiumModal() {
-  var img = document.getElementById("premiumQrCodeImg");
-  if (img && !img.src) img.src = QR_IMAGE_B64;
+  var m = document.getElementById("premiumModal");
+  if (m) m.classList.add("open");
+}
   var m = document.getElementById("premiumModal");
   if (m) m.classList.add("open");
 }
@@ -3761,12 +3762,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // ---- Render sponsored cards immediately ----
   renderSponsoredCards();
-
-  // ---- Embed QR code image (base64 inline) ----
-  (function() {
-    var img = document.getElementById("qrCodeImg");
-    if (img) img.src = QR_IMAGE_B64;
-  })();
 
   // ---- Filter bar ----
   on("applyFilterBtn", "click", applyFilters);
