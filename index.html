@@ -3702,6 +3702,13 @@ async function submitGroup() {
 
     recordSubmitTime();
 
+    // NEW: notify admin via Telegram, non-blocking
+    fetch("https://imnzgzusnghppgbgfdsh.supabase.co/functions/v1/notify-admin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: name, link: link, category: category, country: country })
+    }).catch(function() { /* silent — never block submission on notify failure */ });
+
     ["modalName", "modalLink", "modalLogoUrl", "modalDesc"].forEach(function(id) {
       var el = document.getElementById(id);
       if (el) el.value = "";
