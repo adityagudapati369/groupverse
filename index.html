@@ -3399,40 +3399,39 @@ if (g.logo_url) {
 function applyFiltersFromURL() {
   var params = new URLSearchParams(window.location.search);
   var category = params.get('category');
-  console.log('Category from URL:', category); // Debug line
   
   if (category) {
     var catEl = document.getElementById('filterCategory');
     if (catEl) {
-      // Find option by text content (since options don't have value attributes)
-      var found = false;
-      // Loop through all options (skip the "all" option)
-      for (var i = 1; i < catEl.options.length; i++) {
-        // Compare the option text (case-insensitive)
-        if (catEl.options[i].text.toLowerCase() === category.toLowerCase()) {
+      // Decode the category (handles %20, %26, etc.)
+      var decodedCategory = decodeURIComponent(category);
+      
+      // Loop through all options
+      for (var i = 0; i < catEl.options.length; i++) {
+        var optionText = catEl.options[i].text;
+        var optionValue = catEl.options[i].value;
+        
+        // Try to match by text first (case-insensitive)
+        if (optionText.toLowerCase() === decodedCategory.toLowerCase()) {
           catEl.selectedIndex = i;
-          found = true;
-          console.log('Found category:', catEl.options[i].text);
+          break;
+        }
+        // If not found, try matching by value
+        if (optionValue.toLowerCase() === decodedCategory.toLowerCase()) {
+          catEl.selectedIndex = i;
+          break;
+        }
+        // Try partial match (e.g., "Travel" matches "Travel & Adventure")
+        if (optionText.toLowerCase().includes(decodedCategory.toLowerCase()) || 
+            decodedCategory.toLowerCase().includes(optionText.toLowerCase())) {
+          catEl.selectedIndex = i;
           break;
         }
       }
-      // If not found by text, try matching by the option's value
-      if (!found) {
-        for (var i = 1; i < catEl.options.length; i++) {
-          if (catEl.options[i].value.toLowerCase() === category.toLowerCase()) {
-            catEl.selectedIndex = i;
-            found = true;
-            console.log('Found category by value:', catEl.options[i].text);
-            break;
-          }
-        }
-      }
-      if (!found) {
-        console.log('Category not found in dropdown:', category);
-      }
     }
   }
-  // Now apply the filters
+  
+  // Apply the filters
   applyFilters();
 }
 function applyFilters() {
