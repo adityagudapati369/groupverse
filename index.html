@@ -3405,26 +3405,29 @@ function applyFiltersFromURL() {
       // Decode the category (handles %20, %26, etc.)
       var decodedCategory = decodeURIComponent(category);
       
-      // Loop through all options
-      for (var i = 0; i < catEl.options.length; i++) {
-        var optionText = catEl.options[i].text;
-        var optionValue = catEl.options[i].value;
-        
-        // Try to match by text first (case-insensitive)
-        if (optionText.toLowerCase() === decodedCategory.toLowerCase()) {
-          catEl.selectedIndex = i;
-          break;
-        }
-        // If not found, try matching by value
-        if (optionValue.toLowerCase() === decodedCategory.toLowerCase()) {
-          catEl.selectedIndex = i;
-          break;
-        }
-        // Try partial match (e.g., "Travel" matches "Travel & Adventure")
-        if (optionText.toLowerCase().includes(decodedCategory.toLowerCase()) || 
-            decodedCategory.toLowerCase().includes(optionText.toLowerCase())) {
-          catEl.selectedIndex = i;
-          break;
+      // Check if the category is already selected
+      if (catEl.value !== decodedCategory) {
+        // Loop through all options
+        for (var i = 0; i < catEl.options.length; i++) {
+          var optionText = catEl.options[i].text;
+          var optionValue = catEl.options[i].value;
+          
+          // Try to match by text first (case-insensitive)
+          if (optionText.toLowerCase() === decodedCategory.toLowerCase()) {
+            catEl.selectedIndex = i;
+            break;
+          }
+          // If not found, try matching by value
+          if (optionValue.toLowerCase() === decodedCategory.toLowerCase()) {
+            catEl.selectedIndex = i;
+            break;
+          }
+          // Try partial match (e.g., "Travel" matches "Travel & Adventure")
+          if (optionText.toLowerCase().includes(decodedCategory.toLowerCase()) || 
+              decodedCategory.toLowerCase().includes(optionText.toLowerCase())) {
+            catEl.selectedIndex = i;
+            break;
+          }
         }
       }
     }
@@ -3467,6 +3470,17 @@ function applyFilters() {
         }
       }
     }
+  }
+
+  // Update URL when category changes
+  if (catVal !== "all") {
+    var url = new URL(window.location.href);
+    url.searchParams.set('category', catVal);
+    window.history.replaceState({}, '', url);
+  } else {
+    var url = new URL(window.location.href);
+    url.searchParams.delete('category');
+    window.history.replaceState({}, '', url);
   }
 
   if (typeVal === "verified") {
