@@ -3226,7 +3226,7 @@ async function loadGroups() {
     groupsLibrary = result.data || [];
     groupsHasMore = groupsLibrary.length === GROUPS_PAGE_SIZE;
     groupsOffset  = groupsLibrary.length;
-    // FIX: Call applyFilters() here, not applyFiltersFromURL()
+    // FIX: Use applyFilters() not applyFiltersFromURL()
     applyFilters();
     updateLoadMoreButton();
   } catch (e) {
@@ -3241,7 +3241,6 @@ async function loadGroups() {
     }
   }
 }
-
 // ---- Load more — fetches the next page and appends to groupsLibrary ----
 async function loadMoreGroups() {
   if (!supabaseClient || groupsLoadingMore || !groupsHasMore) return;
