@@ -3226,6 +3226,11 @@ async function loadGroups() {
     groupsLibrary = result.data || [];
     groupsHasMore = groupsLibrary.length === GROUPS_PAGE_SIZE;
     groupsOffset  = groupsLibrary.length;
+    // ... inside loadGroups() function ...
+groupsOffset = groupsLibrary.length;
+applyFiltersFromURL(); // Change this line from applyFilters();
+updateLoadMoreButton();
+// ...
     applyFilters();
     updateLoadMoreButton();
   } catch (e) {
@@ -3395,7 +3400,36 @@ if (g.logo_url) {
   var cd = document.getElementById("resultCountDisplay");
   if (cd) cd.innerText = list.length + (list.length !== 1 ? " communities" : " community") + " listed";
 }
-
+function applyFiltersFromURL() {
+  var params = new URLSearchParams(window.location.search);
+  var category = params.get('category');
+  if (category) {
+    var catEl = document.getElementById('filterCategory');
+    if (catEl) {
+      // Try to find a matching option (case-insensitive)
+      var found = false;
+      for (var i = 0; i < catEl.options.length; i++) {
+        if (catEl.options[i].text.toLowerCase() === category.toLowerCase()) {
+          catEl.value = catEl.options[i].value;
+          found = true;
+          break;
+        }
+      }
+      // If not found, try to match by value
+      if (!found) {
+        for (var i = 0; i < catEl.options.length; i++) {
+          if (catEl.options[i].value.toLowerCase() === category.toLowerCase()) {
+            catEl.value = catEl.options[i].value;
+            found = true;
+            break;
+          }
+        }
+      }
+    }
+  }
+  // Call the existing filter function
+  applyFilters();
+}
 function applyFilters() {
   var filtered   = groupsLibrary.slice();
   var typeEl     = document.getElementById("filterType");
@@ -3436,6 +3470,12 @@ function resetFilters() {
     var el = document.getElementById(id);
     if (el) el.value = fields[id];
   });
+  
+  // Remove category parameter from URL when resetting
+  var url = new URL(window.location.href);
+  url.searchParams.delete('category');
+  window.history.replaceState({}, '', url);
+  
   applyFilters();
 }
 
