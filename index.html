@@ -3226,11 +3226,7 @@ async function loadGroups() {
     groupsLibrary = result.data || [];
     groupsHasMore = groupsLibrary.length === GROUPS_PAGE_SIZE;
     groupsOffset  = groupsLibrary.length;
-    // ... inside loadGroups() function ...
-groupsOffset = groupsLibrary.length;
-applyFiltersFromURL(); // Change this line from applyFilters();
-updateLoadMoreButton();
-// ...
+    // FIX: Call applyFilters() here, not applyFiltersFromURL()
     applyFilters();
     updateLoadMoreButton();
   } catch (e) {
@@ -3403,6 +3399,8 @@ if (g.logo_url) {
 function applyFiltersFromURL() {
   var params = new URLSearchParams(window.location.search);
   var category = params.get('category');
+  console.log('Category from URL:', category); // Debug line
+  
   if (category) {
     var catEl = document.getElementById('filterCategory');
     if (catEl) {
@@ -3414,6 +3412,7 @@ function applyFiltersFromURL() {
         if (catEl.options[i].text.toLowerCase() === category.toLowerCase()) {
           catEl.selectedIndex = i;
           found = true;
+          console.log('Found category:', catEl.options[i].text);
           break;
         }
       }
@@ -3423,9 +3422,13 @@ function applyFiltersFromURL() {
           if (catEl.options[i].value.toLowerCase() === category.toLowerCase()) {
             catEl.selectedIndex = i;
             found = true;
+            console.log('Found category by value:', catEl.options[i].text);
             break;
           }
         }
+      }
+      if (!found) {
+        console.log('Category not found in dropdown:', category);
       }
     }
   }
@@ -3433,6 +3436,9 @@ function applyFiltersFromURL() {
   applyFilters();
 }
 function applyFilters() {
+  var catEl = document.getElementById("filterCategory");
+  console.log('Current category value:', catEl ? catEl.value : 'null');
+  console.log('Current category text:', catEl ? catEl.options[catEl.selectedIndex].text : 'null');
   var filtered   = groupsLibrary.slice();
   var typeEl     = document.getElementById("filterType");
   var catEl      = document.getElementById("filterCategory");
