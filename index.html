@@ -3435,36 +3435,72 @@ function applyFiltersFromURL() {
   applyFilters();
 }
 function applyFilters() {
+  var filtered = groupsLibrary.slice();
+  
+  var typeEl = document.getElementById("filterType");
   var catEl = document.getElementById("filterCategory");
-  console.log('Current category value:', catEl ? catEl.value : 'null');
-  console.log('Current category text:', catEl ? catEl.options[catEl.selectedIndex].text : 'null');
-  var filtered   = groupsLibrary.slice();
-  var typeEl     = document.getElementById("filterType");
-  var catEl      = document.getElementById("filterCategory");
-  var countryEl  = document.getElementById("filterCountry");
-  var langEl     = document.getElementById("filterLanguage");
-  var searchEl   = document.getElementById("filterSearch");
+  var countryEl = document.getElementById("filterCountry");
+  var langEl = document.getElementById("filterLanguage");
+  var searchEl = document.getElementById("filterSearch");
 
-  var typeVal    = typeEl    ? typeEl.value    : "all";
-  var catVal     = catEl     ? catEl.value     : "all";
+  var typeVal = typeEl ? typeEl.value : "all";
+  var catVal = catEl ? catEl.value : "all";
   var countryVal = countryEl ? countryEl.value : "all";
-  var langVal    = langEl    ? langEl.value    : "all";
-  var searchVal  = searchEl  ? searchEl.value.trim().toLowerCase() : "";
+  var langVal = langEl ? langEl.value : "all";
+  var searchVal = searchEl ? searchEl.value.trim().toLowerCase() : "";
 
- if (typeVal === "verified") {
+  // If category is "all", check if we have a category from URL that wasn't set
+  if (catVal === "all") {
+    // Check URL again as fallback
+    var params = new URLSearchParams(window.location.search);
+    var urlCategory = params.get('category');
+    if (urlCategory) {
+      var decodedCat = decodeURIComponent(urlCategory);
+      // Try to find and set the category
+      if (catEl) {
+        for (var i = 0; i < catEl.options.length; i++) {
+          if (catEl.options[i].text.toLowerCase() === decodedCat.toLowerCase() ||
+              catEl.options[i].text.toLowerCase().includes(decodedCat.toLowerCase())) {
+            catEl.selectedIndex = i;
+            catVal = catEl.value;
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  if (typeVal === "verified") {
     filtered = filtered.filter(function(g){ return g.is_verified === true; });
   } else if (typeVal !== "all") {
     filtered = filtered.filter(function(g){ return g.platform_type === typeVal; });
   }
-  if (catVal     !== "all") filtered = filtered.filter(function(g){ return g.category === catVal; });
-  if (countryVal !== "all") filtered = filtered.filter(function(g){ return g.country === countryVal; });
-  if (langVal    !== "all") filtered = filtered.filter(function(g){ return g.language === langVal; });
+  
+  if (catVal !== "all") {
+    filtered = filtered.filter(function(g){ 
+      return g.category && g.category.toLowerCase() === catVal.toLowerCase(); 
+    });
+  }
+  
+  if (countryVal !== "all") {
+    filtered = filtered.filter(function(g){ 
+      return g.country && g.country.toLowerCase() === countryVal.toLowerCase(); 
+    });
+  }
+  
+  if (langVal !== "all") {
+    filtered = filtered.filter(function(g){ 
+      return g.language && g.language.toLowerCase() === langVal.toLowerCase(); 
+    });
+  }
+  
   if (searchVal) {
     filtered = filtered.filter(function(g) {
       return (g.name && g.name.toLowerCase().includes(searchVal)) ||
              (g.tags && g.tags.some(function(t){ return t.toLowerCase().includes(searchVal); }));
     });
   }
+  
   renderGroups(filtered);
 }
 
