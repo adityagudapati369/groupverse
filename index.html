@@ -3406,20 +3406,22 @@ function applyFiltersFromURL() {
   if (category) {
     var catEl = document.getElementById('filterCategory');
     if (catEl) {
-      // Try to find a matching option (case-insensitive)
+      // Find option by text content (since options don't have value attributes)
       var found = false;
-      for (var i = 0; i < catEl.options.length; i++) {
+      // Loop through all options (skip the "all" option)
+      for (var i = 1; i < catEl.options.length; i++) {
+        // Compare the option text (case-insensitive)
         if (catEl.options[i].text.toLowerCase() === category.toLowerCase()) {
-          catEl.value = catEl.options[i].value;
+          catEl.selectedIndex = i;
           found = true;
           break;
         }
       }
-      // If not found, try to match by value
+      // If not found by text, try matching by the option's value
       if (!found) {
-        for (var i = 0; i < catEl.options.length; i++) {
+        for (var i = 1; i < catEl.options.length; i++) {
           if (catEl.options[i].value.toLowerCase() === category.toLowerCase()) {
-            catEl.value = catEl.options[i].value;
+            catEl.selectedIndex = i;
             found = true;
             break;
           }
@@ -3427,7 +3429,7 @@ function applyFiltersFromURL() {
       }
     }
   }
-  // Call the existing filter function
+  // Now apply the filters
   applyFilters();
 }
 function applyFilters() {
@@ -3864,15 +3866,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // ---- Advertise modal ----
   // ---- Premium modal (NEW) ----
-on("openPremiumBtn",   "click", openPremiumModal);
-on("closePremiumBtn",  "click", closePremiumModal);
-var premModal = document.getElementById("premiumModal");
-if (premModal) {
-  premModal.addEventListener("click", function(e) {
-    if (e.target === premModal) closePremiumModal();
-  });
-}
-on("bulkCodeCheckBtn", "click", applyBulkCode);
+  on("openPremiumBtn",   "click", openPremiumModal);
+  on("closePremiumBtn",  "click", closePremiumModal);
+  var premModal = document.getElementById("premiumModal");
+  if (premModal) {
+    premModal.addEventListener("click", function(e) {
+      if (e.target === premModal) closePremiumModal();
+    });
+  }
+  on("bulkCodeCheckBtn", "click", applyBulkCode);
   on("openAdvertiseBtn",   "click", openAdvertiseModal);
   on("closeAdvertiseBtn",  "click", closeAdvertiseModal);
   var advModal = document.getElementById("advertiseModal");
@@ -3884,19 +3886,19 @@ on("bulkCodeCheckBtn", "click", applyBulkCode);
 
   // Escape key closes all modals
   document.addEventListener("keydown", function(e) {
-  if (e.key === "Escape") {
-    var m   = document.getElementById("groupModal");
-    var fg  = document.getElementById("followGateModal");
-    var ad  = document.getElementById("advertiseModal");
-    var gm  = document.getElementById("gamesModal");
-    var prm = document.getElementById("premiumModal"); // NEW
-    if (m   && m.classList.contains("open"))   closeModal();
-    if (fg  && fg.classList.contains("open"))  closeFollowGate();
-    if (ad  && ad.classList.contains("open"))  closeAdvertiseModal();
-    if (gm  && gm.classList.contains("open"))  closeGamesModal();
-    if (prm && prm.classList.contains("open")) closePremiumModal(); // NEW
-  }
-});
+    if (e.key === "Escape") {
+      var m   = document.getElementById("groupModal");
+      var fg  = document.getElementById("followGateModal");
+      var ad  = document.getElementById("advertiseModal");
+      var gm  = document.getElementById("gamesModal");
+      var prm = document.getElementById("premiumModal");
+      if (m   && m.classList.contains("open"))   closeModal();
+      if (fg  && fg.classList.contains("open"))  closeFollowGate();
+      if (ad  && ad.classList.contains("open"))  closeAdvertiseModal();
+      if (gm  && gm.classList.contains("open"))  closeGamesModal();
+      if (prm && prm.classList.contains("open")) closePremiumModal();
+    }
+  });
 
   // ---- Tags ----
   on("addTagBtn",      "click",   addTag);
@@ -3929,6 +3931,15 @@ on("bulkCodeCheckBtn", "click", applyBulkCode);
       header.classList.toggle("scrolled", window.scrollY > 8);
     }, { passive: true });
   }
+
+  // ---- Handle URL parameters on page load ----
+  // Check for category parameter in URL and apply filter
+  applyFiltersFromURL();
+
+  // Also update the filter when the user uses browser back/forward buttons
+  window.addEventListener('popstate', function() {
+    applyFiltersFromURL();
+  });
 
 }); // end DOMContentLoaded
 
