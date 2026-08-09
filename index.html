@@ -627,8 +627,7 @@
     .join-link-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px -8px rgba(0,0,0,0.3); }
     .join-link-btn.whatsapp { background: linear-gradient(95deg, var(--wa), var(--wa-deep)); }
     .join-link-btn.telegram { background: linear-gradient(95deg, var(--tg), var(--tg-deep)); }
-    .copy-icon-btn { background: #f1f5f9; border: none; width: 44px; height: 44px; border-radius: 16px; font-size: 1.05rem; cursor: pointer; transition: 0.2s; color: #1e293b; flex-shrink: 0; }
-    .copy-icon-btn:hover { background: #e0eaff; color: var(--wa-deep); transform: translateY(-2px); }
+    .copy-icon-btn { background: #f1f5f9; border: none; width: 44px; height: 44px; border-radius: 16px; font-size: 1.05rem; cursor: pointer; transition: 0.2s; color: #1e293b; flex-shrink: 0; display: flex; align-items: center; justify-content: center; text-decoration: none; }    .copy-icon-btn:hover { background: #e0eaff; color: var(--wa-deep); transform: translateY(-2px); }
     .copy-icon-btn.copied { background: var(--wa); color: white; }
     .loading-spinner { grid-column: 1/-1; text-align: center; padding: 70px 20px; color: var(--muted); font-size: 1.05rem; }
     .loading-spinner i { font-size: 1.6rem; margin-bottom: 10px; display: block; color: var(--tg); }
@@ -3308,7 +3307,32 @@ function getPlatformMeta(pt) {
     return { icon: '<i class="fab fa-telegram fa-2x" style="color:#0088cc"></i>',  cls: "telegram", label: '<i class="fab fa-telegram"></i> Subscribe',  badge: "📡 Channel" };
   }
 }
+function getDescriptionText(g) {
+  var desc = (g.description || "").trim();
+  if (desc.length >= 20) return desc.substring(0, 140);
 
+  var fallbacks = {
+    "Technology & AI": "A community focused on the latest in technology, AI tools, and tech discussions.",
+    "Cryptocurrency & Web3": "Discuss crypto trends, Web3 projects, and blockchain updates with fellow enthusiasts.",
+    "Business & Startups": "Connect with founders and entrepreneurs sharing startup ideas, growth tips, and business insights.",
+    "Education & Learning": "A group for learners sharing study resources, courses, and educational updates.",
+    "Social & Friendship": "Meet new people, chat, and build friendships in a friendly community space.",
+    "Entertainment & Memes": "Daily entertainment, memes, and fun content to brighten your day.",
+    "Gaming & Esports": "Connect with gamers, discuss esports, and find teammates for your favorite games.",
+    "Health & Wellness": "Tips and discussions on health, fitness, and overall wellness from the community.",
+    "Jobs & Freelance": "Job alerts, freelance opportunities, and career updates shared regularly.",
+    "News & Politics": "Stay updated with the latest news and discussions on current events.",
+    "Sports": "Sports news, match updates, and discussions for fans and enthusiasts.",
+    "Life Hacks": "Practical tips and tricks to make everyday life simpler and more efficient.",
+    "Art / Design / Photography": "A creative space for artists, designers, and photographers to share their work.",
+    "Music & Audio": "Discover new music, share tracks, and connect with fellow music lovers.",
+    "Film & Animation": "Discussions and updates on movies, animation, and everything in film.",
+    "Shopping": "Deals, discounts, and shopping alerts to help you save on your favorite products.",
+    "Travel": "Travel tips, booking alerts, and updates for frequent and new travelers alike."
+  };
+
+  return fallbacks[g.category] || "Join this active community to connect, share, and stay updated.";
+}
 function renderGroups(list) {
   var container = document.getElementById("groupsGridContainer");
   if (!container) return;
@@ -3383,7 +3407,7 @@ if (g.logo_url) {
           '</div>' +
         '</div>' +
         '<div class="card-body">' +
-          '<div class="description">' + escapeHtml((g.description || "Join this community!").substring(0, 140)) + '</div>' +
+          '<div class="description">' + escapeHtml(getDescriptionText(g)) + '</div>' +
           joinCounterHtml +
           '<div class="card-actions">' +
             tagsDropdownHtml +
