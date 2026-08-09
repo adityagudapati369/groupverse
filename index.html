@@ -609,8 +609,13 @@
 .tags-dropdown-panel {
   display: none; position: absolute; bottom: calc(100% + 8px); left: 0;
   background: #fff; border-radius: 12px; padding: 10px;
-  box-shadow: 0 12px 28px rgba(0,0,0,0.15); min-width: 200px; z-index: 20;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+  width: 260px; max-width: 80vw; max-height: 220px; overflow-y: auto;
+  z-index: 30;
   flex-wrap: wrap; gap: 6px;
+}
+@media (max-width: 480px) {
+  .tags-dropdown-panel { width: 220px; }
 }
 .tags-dropdown-panel.open { display: flex; }
 .card-actions { display: flex; align-items: center; gap: 8px; }
@@ -2074,7 +2079,7 @@
           <button type="button" id="addTagBtn" style="background:#eef2ff;border:none;border-radius:30px;padding:7px 16px;cursor:pointer;font-weight:700;font-size:0.8rem;white-space:nowrap;flex-shrink:0"><i class="fas fa-plus"></i> Add</button>
         </div>
       </div>
-      <p class="form-hint">Press Enter or tap Add · max 8 tags</p>
+      <p class="form-hint">Press Enter or tap Add · max 6 tags</p>
 <label><i class="fas fa-ticket"></i> Bulk Code <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(optional — only if you bought a Bulk Pack)</span></label>
 <div class="bulk-code-row">
   <input type="text" id="bulkCodeInput" placeholder="e.g., GV-AB12CD" autocomplete="off" maxlength="20">
@@ -3651,7 +3656,7 @@ function addTag() {
   var val = field.value.trim().replace(/^#/, "");
   if (!val) return;
   if (currentTags.includes(val))  { showToast("Tag already added", true); return; }
-  if (currentTags.length >= 8)    { showToast("Maximum 8 tags", true); return; }
+  if (currentTags.length >= 6)    { showToast("Maximum 6 tags", true); return; }
   currentTags.push(val);
   renderTagChips();
   field.value = "";
