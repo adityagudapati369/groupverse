@@ -596,6 +596,25 @@
     .badge-type { background: #fff4e6; border-radius: 40px; padding: 3px 12px; font-size: 0.68rem; font-weight: 700; color: #92400e; }
     .tags-container { display: flex; flex-wrap: wrap; gap: 7px; margin: 12px 0; }
     .tag-pill { background: linear-gradient(115deg,#f0f4fe,#e9f2fa); color: #1f3a6b; font-size: 0.64rem; font-weight: 700; padding: 4px 12px; border-radius: 50px; display: inline-flex; align-items: center; gap: 5px; }
+    .tags-dropdown-wrap { position: relative; display: inline-flex; }
+.tags-toggle-btn {
+  background: linear-gradient(115deg,#f0f4fe,#e9f2fa);
+  color: #1f3a6b; border: none; border-radius: 50px;
+  padding: 10px 14px; font-size: 0.78rem; font-weight: 700;
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+  height: 42px;
+}
+.tags-toggle-btn i.fa-chevron-down { font-size: 0.65rem; transition: transform 0.2s; }
+.tags-toggle-btn.open i.fa-chevron-down { transform: rotate(180deg); }
+.tags-dropdown-panel {
+  display: none; position: absolute; bottom: calc(100% + 8px); left: 0;
+  background: #fff; border-radius: 12px; padding: 10px;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.15); min-width: 200px; z-index: 20;
+  flex-wrap: wrap; gap: 6px;
+}
+.tags-dropdown-panel.open { display: flex; }
+.card-actions { display: flex; align-items: center; gap: 8px; }
+.card-actions .join-link-btn { flex: 1; }
     .card-body { padding: 16px 22px 22px; }
     .description { color: var(--ink-soft); font-size: 0.85rem; margin-bottom: 6px; line-height: 1.5; }
     .card-actions { display: flex; justify-content: space-between; gap: 10px; margin-top: 16px; }
@@ -3306,11 +3325,15 @@ function renderGroups(list) {
 
   container.innerHTML = list.map(function(g, i) {
     var m = getPlatformMeta(g.platform_type);
-    var tags = (g.tags && g.tags.length)
-      ? '<div class="tags-container">' +
-        g.tags.map(function(t) {
+   var tagPills = (g.tags && g.tags.length)
+      ? g.tags.map(function(t) {
           return '<span class="tag-pill"><i class="fas fa-hashtag"></i> ' + escapeHtml(t) + '</span>';
-        }).join("") +
+        }).join("")
+      : "";
+    var tagsDropdownHtml = (g.tags && g.tags.length)
+      ? '<div class="tags-dropdown-wrap">' +
+          '<button type="button" class="tags-toggle-btn tags-toggle" aria-label="Show tags"><i class="fas fa-tags"></i> Tags <i class="fas fa-chevron-down"></i></button>' +
+          '<div class="tags-dropdown-panel">' + tagPills + '</div>' +
         '</div>'
       : "";
     var delay = Math.min(i, 11) * 0.045;
@@ -3359,6 +3382,7 @@ if (g.logo_url) {
           tags +
           joinCounterHtml +
           '<div class="card-actions">' +
+            tagsDropdownHtml +
             '<a href="' + escapeAttr(g.link) + '" target="_blank" rel="noopener noreferrer" class="join-link-btn ' + m.cls + '" data-id="' + escapeAttr(g.id) + '">' + m.label + '</a>' +
             '<button class="copy-icon-btn" data-link="' + escapeAttr(g.link) + '" title="Copy link" aria-label="Copy link"><i class="fas fa-copy"></i></button>' +
             '<a href="mailto:abuse@groupverse.co.in?subject=' + encodeURIComponent("Report: " + g.name) + '&body=' + encodeURIComponent("Reporting this group:\n\nName: " + g.name + "\nLink: " + g.link + "\n\nReason: ") + '" class="copy-icon-btn" title="Report this group" aria-label="Report abuse" style="color:#b91c1c;"><i class="fas fa-flag"></i></a>' +
@@ -3381,6 +3405,20 @@ if (g.logo_url) {
         }, 1600);
       }).catch(function() { showToast("❌ Could not copy", true); });
     });
+  });
+  container.querySelectorAll(".tags-toggle").forEach(function(btn) {
+    btn.addEventListener("click", function(e) {
+      e.stopPropagation();
+      var panel = btn.nextElementSibling;
+      var isOpen = panel.classList.contains("open");
+      document.querySelectorAll(".tags-dropdown-panel.open").forEach(function(p) { p.classList.remove("open"); });
+      document.querySelectorAll(".tags-toggle-btn.open").forEach(function(b) { b.classList.remove("open"); });
+      if (!isOpen) { panel.classList.add("open"); btn.classList.add("open"); }
+    });
+  });
+  document.addEventListener("click", function() {
+    document.querySelectorAll(".tags-dropdown-panel.open").forEach(function(p) { p.classList.remove("open"); });
+    document.querySelectorAll(".tags-toggle-btn.open").forEach(function(b) { b.classList.remove("open"); });
   });
   container.querySelectorAll(".join-link-btn").forEach(function(btn) {
     btn.addEventListener("click", function() {
