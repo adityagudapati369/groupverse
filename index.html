@@ -3431,14 +3431,14 @@ if (g.logo_url) {
             tagsDropdownHtml +
             '<a href="' + escapeAttr(g.link) + '" target="_blank" rel="noopener noreferrer" class="join-link-btn ' + m.cls + '" data-id="' + escapeAttr(g.id) + '">' + m.label + '</a>' +
             '<button class="copy-icon-btn" data-link="' + escapeAttr(g.link) + '" title="Copy link" aria-label="Copy link"><i class="fas fa-copy"></i></button>' +
-            '<a href="mailto:abuse@groupverse.co.in?subject=' + encodeURIComponent("Report: " + g.name) + '&body=' + encodeURIComponent("Reporting this group:\n\nName: " + g.name + "\nLink: " + g.link + "\n\nReason: ") + '" class="copy-icon-btn" title="Report this group" aria-label="Report abuse" style="color:#b91c1c;"><i class="fas fa-flag"></i></a>' +
+           '<button class="copy-icon-btn report-btn" data-group-id="' + escapeAttr(g.id) + '" title="Report this group" aria-label="Report abuse" style="color:#b91c1c;"><i class="fas fa-flag"></i></button>' +
           '</div>' +
         '</div>' +
       '</div>'
     );
   }).join("");
 
-  container.querySelectorAll(".copy-icon-btn").forEach(function(btn) {
+  container.querySelectorAll(".copy-icon-btn[data-link]").forEach(function(btn) {
     btn.addEventListener("click", function() {
       var link = btn.getAttribute("data-link");
       navigator.clipboard.writeText(link).then(function() {
