@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://telegramgrouplinks.vercel.app/sitemap.xml
+Sitemap: https://groupverse.co.in/sitemap.xml
