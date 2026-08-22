@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <meta name="blogarama-site-verification" content="blogarama-869c8278-0214-439d-98e5-eb04ad79aeb8">
 
-  <!-- ═══════════════════════════════════════════════════════════
+  <!-- ═══════════════════════════════════════════════════════════#dynamic-groups-wrapper {
        CONTENT SECURITY POLICY
   ═══════════════════════════════════════════════════════════ -->
   <meta http-equiv="Content-Security-Policy" content="
@@ -613,9 +613,9 @@
     .groups-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px,1fr)); gap: 26px; margin: 0 0 60px; }
     /* ADD THIS NEW RULE - makes dynamic wrapper also a grid */
 #dynamic-groups-wrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-  gap: 26px;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)) !important;
+  gap: 26px !important;
 }
     .group-card {
       background: var(--surface); border-radius: var(--radius-lg); overflow: hidden;
@@ -3367,17 +3367,22 @@ function renderGroups(list) {
   if (!dynamicWrapper) {
     dynamicWrapper = document.createElement("div");
     dynamicWrapper.id = "dynamic-groups-wrapper";
-     // ADD THIS LINE - ensure it inherits grid layout
+    // ADD THESE - ensure grid layout
     dynamicWrapper.style.display = "grid";
     dynamicWrapper.style.gridTemplateColumns = "repeat(auto-fill, minmax(330px, 1fr))";
     dynamicWrapper.style.gap = "26px";
-    // Insert it after the static content
+    
     var staticContent = container.querySelector(".static-groups-grid");
     if (staticContent) {
       staticContent.after(dynamicWrapper);
     } else {
       container.appendChild(dynamicWrapper);
     }
+  } else {
+    // ALSO ADD THESE - ensure existing wrapper has grid styles
+    dynamicWrapper.style.display = "grid";
+    dynamicWrapper.style.gridTemplateColumns = "repeat(auto-fill, minmax(330px, 1fr))";
+    dynamicWrapper.style.gap = "26px";
   }
 
   if (!list.length) {
