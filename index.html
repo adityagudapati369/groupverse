@@ -3217,16 +3217,33 @@ async function loadTrustStats() {
   } catch (e) { console.warn("loadTrustStats failed:", e); }
 }
 async function loadGroups() {
-  var container = document.getElementById("groupsGridContainer");
   if (!supabaseClient) return;
-  if (container) {
-    container.innerHTML =
-      '<div class="loading-spinner">' +
-      '<i class="fas fa-spinner fa-pulse"></i>Loading communities…' +
-      '</div>';
+  
+  var container = document.getElementById("groupsGridContainer");
+  
+  // Create a dynamic wrapper if it doesn't exist (keeps static content intact)
+  var dynamicWrapper = document.getElementById("dynamic-groups-wrapper");
+  if (!dynamicWrapper) {
+    dynamicWrapper = document.createElement("div");
+    dynamicWrapper.id = "dynamic-groups-wrapper";
+    // Insert after static content
+    var staticContent = container.querySelector(".static-groups-grid");
+    if (staticContent) {
+      staticContent.after(dynamicWrapper);
+    } else {
+      container.appendChild(dynamicWrapper);
+    }
   }
-  groupsOffset  = 0;
+  
+  // Show loading state inside the dynamic wrapper only
+  dynamicWrapper.innerHTML =
+    '<div class="loading-spinner">' +
+    '<i class="fas fa-spinner fa-pulse"></i>Loading communities…' +
+    '</div>';
+
+  groupsOffset = 0;
   groupsHasMore = true;
+  
   try {
     var result = await supabaseClient
       .from("groups")
@@ -3239,20 +3256,17 @@ async function loadGroups() {
     if (result.error) throw result.error;
     groupsLibrary = result.data || [];
     groupsHasMore = groupsLibrary.length === GROUPS_PAGE_SIZE;
-    groupsOffset  = groupsLibrary.length;
-    // FIX: Use applyFilters() not applyFiltersFromURL()
+    groupsOffset = groupsLibrary.length;
     applyFilters();
     updateLoadMoreButton();
   } catch (e) {
     console.error("loadGroups:", e);
     showToast("Error loading groups", true);
-    if (container) {
-      container.innerHTML =
-        '<div class="empty-state">' +
-        '<i class="fas fa-triangle-exclamation fa-2x"></i>' +
-        '<p>Could not load communities. Please refresh.</p>' +
-        '</div>';
-    }
+    dynamicWrapper.innerHTML =
+      '<div class="empty-state">' +
+      '<i class="fas fa-triangle-exclamation fa-2x"></i>' +
+      '<p>Could not load communities. Please refresh.</p>' +
+      '</div>';
   }
 }
 // ---- Load more — fetches the next page and appends to groupsLibrary ----
