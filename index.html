@@ -3329,8 +3329,22 @@ function renderGroups(list) {
   var container = document.getElementById("groupsGridContainer");
   if (!container) return;
 
+  // Find or create the dynamic groups wrapper
+  var dynamicWrapper = document.getElementById("dynamic-groups-wrapper");
+  if (!dynamicWrapper) {
+    dynamicWrapper = document.createElement("div");
+    dynamicWrapper.id = "dynamic-groups-wrapper";
+    // Insert it after the static content
+    var staticContent = container.querySelector(".static-groups-grid");
+    if (staticContent) {
+      staticContent.after(dynamicWrapper);
+    } else {
+      container.appendChild(dynamicWrapper);
+    }
+  }
+
   if (!list.length) {
-    container.innerHTML =
+    dynamicWrapper.innerHTML =
       '<div class="empty-state">' +
       '<i class="fas fa-users-slash fa-3x"></i>' +
       '<p>No groups match your filters.</p>' +
@@ -3344,9 +3358,10 @@ function renderGroups(list) {
     return;
   }
 
-  container.innerHTML = list.map(function(g, i) {
+  // Render dynamic groups inside the wrapper
+  dynamicWrapper.innerHTML = list.map(function(g, i) {
     var m = getPlatformMeta(g.platform_type);
-   var tagPills = (g.tags && g.tags.length)
+    var tagPills = (g.tags && g.tags.length)
       ? g.tags.map(function(t) {
           return '<span class="tag-pill"><i class="fas fa-hashtag"></i> ' + escapeHtml(t) + '</span>';
         }).join("")
@@ -3359,31 +3374,30 @@ function renderGroups(list) {
       : "";
     var delay = Math.min(i, 11) * 0.045;
 
-    // User-submitted logo support
-    var isNewSubmission = g.created_at ? (Date.now() - new Date(g.created_at).getTime()) < (3 * 24 * 60 * 60 * 1000) : false;
     var OLD_WA_ICON = '<svg viewBox="0 0 175.216 175.552" width="34" height="34" xmlns="http://www.w3.org/2000/svg"><path fill="#25D366" d="M87.4 25.5c-34.1 0-61.8 27.7-61.8 61.8 0 10.9 2.9 21.5 8.3 30.8l-8.8 32.2 33-8.7c8.9 4.9 19 7.5 29.3 7.5h0c34.1 0 61.8-27.7 61.8-61.8 0-16.5-6.4-32-18.1-43.7-11.7-11.7-27.2-18.1-43.7-18.1z"/><path fill="#fff" d="M69 51.6c-1.2-2.7-2.5-2.8-3.7-2.8h-3.1c-1.1 0-2.8.4-4.3 2-1.5 1.6-5.6 5.5-5.6 13.4s5.8 15.5 6.6 16.6c.8 1.1 11.2 17.9 27.6 24.4 13.6 5.4 16.4 4.3 19.4 4 3-.3 9.6-3.9 11-7.7 1.3-3.8 1.3-7 .9-7.7-.4-.7-1.5-1.1-3.2-2-1.7-.8-9.6-4.7-11.1-5.3-1.5-.5-2.6-.8-3.6.8-1.1 1.7-4.2 5.3-5.2 6.4-1 1.1-1.9 1.2-3.5.4-1.7-.8-7.1-2.6-13.5-8.3-5-4.4-8.3-9.9-9.3-11.6-1-1.7-.1-2.6.7-3.5.7-.7 1.7-1.9 2.5-2.9.8-1 1.1-1.7 1.6-2.9.5-1.1.3-2.2-.1-3.1-.4-.8-3.6-9.1-5.1-12.4z"/></svg>';
     var badgeHtml = '';
-if (g.logo_url) {
-  badgeHtml =
-    '<div class="platform-badge" style="padding:0;overflow:hidden;">' +
-      '<img src="' + escapeAttr(g.logo_url) + '" alt="' + escapeHtml(g.name) + ' logo" loading="lazy" ' +
-           'style="width:100%;height:100%;object-fit:contain;background:#fff;" ' +
-           'onerror="window.handleLogoErr(this)" data-fallback-icon="' + escapeAttr(m.icon) + '" />' +
-    '</div>';
-} else if (g.platform_type === "whatsapp_group" || g.platform_type === "whatsapp_channel") {
-  badgeHtml = '<div class="platform-badge" style="background:#fff;border:2px solid #25D366;">' + OLD_WA_ICON + '</div>';
-} else {
-  badgeHtml = '<div class="platform-badge">' + m.icon + '</div>';
-}
-    // ---- New / Popular badges + join counter ----
+    if (g.logo_url) {
+      badgeHtml =
+        '<div class="platform-badge" style="padding:0;overflow:hidden;">' +
+          '<img src="' + escapeAttr(g.logo_url) + '" alt="' + escapeHtml(g.name) + ' logo" loading="lazy" ' +
+               'style="width:100%;height:100%;object-fit:contain;background:#fff;" ' +
+               'onerror="window.handleLogoErr(this)" data-fallback-icon="' + escapeAttr(m.icon) + '" />' +
+        '</div>';
+    } else if (g.platform_type === "whatsapp_group" || g.platform_type === "whatsapp_channel") {
+      badgeHtml = '<div class="platform-badge" style="background:#fff;border:2px solid #25D366;">' + OLD_WA_ICON + '</div>';
+    } else {
+      badgeHtml = '<div class="platform-badge">' + m.icon + '</div>';
+    }
+    
     var isNew = g.created_at ? (Date.now() - new Date(g.created_at).getTime()) < (3 * 24 * 60 * 60 * 1000) : false;
     var clickCount = g.click_count || 0;
     var isPopular  = clickCount >= 20;
     var statusBadgeHtml =
-  (isNew         ? '<span class="badge-new">🆕 New</span>' : '') +
-  (isPopular     ? '<span class="badge-popular">🔥 Popular</span>' : '') +
-  (g.is_verified ? '<span class="badge-verified"><i class="fas fa-check-circle"></i> Verified</span>' : ''); // NEW
+      (isNew         ? '<span class="badge-new">🆕 New</span>' : '') +
+      (isPopular     ? '<span class="badge-popular">🔥 Popular</span>' : '') +
+      (g.is_verified ? '<span class="badge-verified"><i class="fas fa-check-circle"></i> Verified</span>' : '');
     var joinCounterHtml = '<span class="join-counter"><i class="fas fa-users"></i> ' + clickCount + ' joined</span>';
+    
     return (
       '<div class="group-card" style="animation-delay:' + delay + 's">' +
         '<div class="card-header">' +
@@ -3405,28 +3419,15 @@ if (g.logo_url) {
             tagsDropdownHtml +
             '<a href="' + escapeAttr(g.link) + '" target="_blank" rel="noopener noreferrer" class="join-link-btn ' + m.cls + '" data-id="' + escapeAttr(g.id) + '">' + m.label + '</a>' +
             '<button class="copy-icon-btn" data-link="' + escapeAttr(g.link) + '" title="Copy link" aria-label="Copy link"><i class="fas fa-copy"></i></button>' +
-           '<button class="copy-icon-btn report-btn" data-group-id="' + escapeAttr(g.id) + '" title="Report this group" aria-label="Report abuse" style="color:#b91c1c;"><i class="fas fa-flag"></i></button>' +
+            '<button class="copy-icon-btn report-btn" data-group-id="' + escapeAttr(g.id) + '" title="Report this group" aria-label="Report abuse" style="color:#b91c1c;"><i class="fas fa-flag"></i></button>' +
           '</div>' +
         '</div>' +
       '</div>'
     );
   }).join("");
 
-  container.querySelectorAll(".copy-icon-btn[data-link]").forEach(function(btn) {
-    btn.addEventListener("click", function() {
-      var link = btn.getAttribute("data-link");
-      navigator.clipboard.writeText(link).then(function() {
-        btn.classList.add("copied");
-        btn.innerHTML = '<i class="fas fa-check"></i>';
-        showToast("✅ Link copied!");
-        setTimeout(function() {
-          btn.classList.remove("copied");
-          btn.innerHTML = '<i class="fas fa-copy"></i>';
-        }, 1600);
-      }).catch(function() { showToast("❌ Could not copy", true); });
-    });
-  });
-  container.querySelectorAll(".copy-icon-btn[data-link]").forEach(function(btn) {
+  // Wire up event listeners for dynamic content
+  dynamicWrapper.querySelectorAll(".copy-icon-btn[data-link]").forEach(function(btn) {
     btn.addEventListener("click", function() {
       var link = btn.getAttribute("data-link");
       navigator.clipboard.writeText(link).then(function() {
@@ -3441,18 +3442,18 @@ if (g.logo_url) {
     });
   });
 
-  container.querySelectorAll(".report-btn").forEach(function(btn) {
+  dynamicWrapper.querySelectorAll(".report-btn").forEach(function(btn) {
     btn.addEventListener("click", function() {
       var groupId = btn.getAttribute("data-group-id");
       btn.disabled = true;
       fetch("https://imnzgzusnghppgbgfdsh.supabase.co/functions/v1/report-group", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImltbnpnenVzbmdocHBnYmdmZHNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNTYyNDIsImV4cCI6MjA5NzYzMjI0Mn0.XIMHM7lyUJM-dbmrIIkM7eWIzu7znrKxjHkfU-XhJLk"
-  },
-  body: JSON.stringify({ groupId: groupId, reason: "Reported via directory" })
-})
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImltbnpnenVzbmdocHBnYmdmZHNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNTYyNDIsImV4cCI6MjA5NzYzMjI0Mn0.XIMHM7lyUJM-dbmrIIkM7eWIzu7znrKxjHkfU-XhJLk"
+        },
+        body: JSON.stringify({ groupId: groupId, reason: "Reported via directory" })
+      })
       .then(function(res) { return res.json(); })
       .then(function(data) {
         if (data.error) {
@@ -3465,7 +3466,8 @@ if (g.logo_url) {
       .finally(function() { btn.disabled = false; });
     });
   });
-  container.querySelectorAll(".tags-toggle").forEach(function(btn) {
+
+  dynamicWrapper.querySelectorAll(".tags-toggle").forEach(function(btn) {
     btn.addEventListener("click", function(e) {
       e.stopPropagation();
       var panel = btn.nextElementSibling;
@@ -3475,11 +3477,8 @@ if (g.logo_url) {
       if (!isOpen) { panel.classList.add("open"); btn.classList.add("open"); }
     });
   });
-  document.addEventListener("click", function() {
-    document.querySelectorAll(".tags-dropdown-panel.open").forEach(function(p) { p.classList.remove("open"); });
-    document.querySelectorAll(".tags-toggle-btn.open").forEach(function(b) { b.classList.remove("open"); });
-  });
-  container.querySelectorAll(".join-link-btn").forEach(function(btn) {
+
+  dynamicWrapper.querySelectorAll(".join-link-btn").forEach(function(btn) {
     btn.addEventListener("click", function() {
       var gid = btn.getAttribute("data-id");
       if (!gid || !supabaseClient) return;
@@ -3488,6 +3487,7 @@ if (g.logo_url) {
       });
     });
   });
+
   var cd = document.getElementById("resultCountDisplay");
   if (cd) cd.innerText = list.length + (list.length !== 1 ? " communities" : " community") + " listed";
 }
