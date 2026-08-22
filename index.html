@@ -3262,6 +3262,7 @@ async function loadGroups() {
   } catch (e) {
     console.error("loadGroups:", e);
     showToast("Error loading groups", true);
+    if (dynamicWrapper) 
     dynamicWrapper.innerHTML =
       '<div class="empty-state">' +
       '<i class="fas fa-triangle-exclamation fa-2x"></i>' +
