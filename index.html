@@ -609,7 +609,14 @@
 }
     .badge-new { background:#fff3cd; color:#8a6500; font-size:0.65rem; font-weight:800; padding:3px 9px; border-radius:30px; margin-left:6px; }
     .badge-popular { background:#ffe3e3; color:#c62828; font-size:0.65rem; font-weight:800; padding:3px 9px; border-radius:30px; margin-left:6px; }
-    .join-counter { font-size:0.74rem; color:var(--muted); display:flex; align-items:center; gap:5px; margin:2px 0 6px; }.groups-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px,1fr)); gap: 26px; margin: 0 0 60px; }
+    .join-counter { font-size:0.74rem; color:var(--muted); display:flex; align-items:center; gap:5px; margin:2px 0 6px; }
+    .groups-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px,1fr)); gap: 26px; margin: 0 0 60px; }
+    /* ADD THIS NEW RULE - makes dynamic wrapper also a grid */
+#dynamic-groups-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 26px;
+}
     .group-card {
       background: var(--surface); border-radius: var(--radius-lg); overflow: hidden;
       box-shadow: 0 10px 26px -16px rgba(15,23,42,0.14); border: 1px solid var(--line);
@@ -1470,6 +1477,13 @@
 .bulk-code-status { font-size:0.75rem; margin-top:6px; font-weight:700; display:none; }
 .bulk-code-status.ok { color:#166534; display:block; }
 .bulk-code-status.bad { color:#b91c1c; display:block; }
+    /* Make both static and dynamic content use grid layout */
+.static-groups-grid,
+#dynamic-groups-wrapper {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)) !important;
+  gap: 26px !important;
+}
     </style>
     <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JQTHYZE215"></script>
@@ -3226,6 +3240,10 @@ async function loadGroups() {
   if (!dynamicWrapper) {
     dynamicWrapper = document.createElement("div");
     dynamicWrapper.id = "dynamic-groups-wrapper";
+       // ADD THESE LINES - ensure grid layout
+    dynamicWrapper.style.display = "grid";
+    dynamicWrapper.style.gridTemplateColumns = "repeat(auto-fill, minmax(330px, 1fr))";
+    dynamicWrapper.style.gap = "26px";
     // Insert after static content
     var staticContent = container.querySelector(".static-groups-grid");
     if (staticContent) {
@@ -3349,6 +3367,10 @@ function renderGroups(list) {
   if (!dynamicWrapper) {
     dynamicWrapper = document.createElement("div");
     dynamicWrapper.id = "dynamic-groups-wrapper";
+     // ADD THIS LINE - ensure it inherits grid layout
+    dynamicWrapper.style.display = "grid";
+    dynamicWrapper.style.gridTemplateColumns = "repeat(auto-fill, minmax(330px, 1fr))";
+    dynamicWrapper.style.gap = "26px";
     // Insert it after the static content
     var staticContent = container.querySelector(".static-groups-grid");
     if (staticContent) {
