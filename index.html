@@ -2,7 +2,7 @@
 <html lang="en" prefix="og: https://ogp.me/ns#">
 <head>
   <meta charset="UTF-8">
-  <meta name="google-site-verification" content="AnwMm_UXSIDcFHdQfScxsJVlTwNY-sdQvPBA4vXh6gE" />bb
+  <meta name="google-site-verification" content="AnwMm_UXSIDcFHdQfScxsJVlTwNY-sdQvPBA4vXh6gE" />
   <meta name="msvalidate.01" content="CBEB27B2B760915ACC3E4A7223CB7D1A" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <meta name="blogarama-site-verification" content="blogarama-869c8278-0214-439d-98e5-eb04ad79aeb8">
@@ -1894,7 +1894,7 @@
 
   <div id="groupsGridContainer" class="groups-grid">
    <!-- ═══ STATIC CRAWLER CONTENT (visible to Googlebot) ═══ -->
-<div class="static-groups-grid" style="display: block; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; padding: 1.5rem 0; background: #faf9ff; border-radius: 12px; margin: 0 0 30px;">
+<div class="static-groups-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; padding: 1.5rem 0; background: #faf9ff; border-radius: 12px; margin: 0 0 30px;">
   <div style="background: #fff; border-radius: 12px; padding: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 1px solid #eee;">
     <h4 style="margin:0 0 0.25rem; font-size: 1.1rem;">JobThiminasi.com</h4>
     <p style="margin:0 0 0.5rem; color: #555; font-size: 0.9rem;">Your trusted source for verified job alerts, career updates, admissions, scholarships, and placement opportunities.</p>
@@ -3220,7 +3220,7 @@ async function loadGroups() {
   if (!supabaseClient) return;
   
   var container = document.getElementById("groupsGridContainer");
-  
+  if (!container) return;  
   // Create a dynamic wrapper if it doesn't exist (keeps static content intact)
   var dynamicWrapper = document.getElementById("dynamic-groups-wrapper");
   if (!dynamicWrapper) {
