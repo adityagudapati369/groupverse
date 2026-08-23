@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.groupverse.co.in"
+        }
+      ],
+      "destination": "https://groupverse.co.in/:path*",
+      "permanent": true
+    }
+  ]
+}
