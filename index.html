@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <meta name="blogarama-site-verification" content="blogarama-869c8278-0214-439d-98e5-eb04ad79aeb8">
 
-  <!-- ═══════════════════════════════════════════════════════════#dynamic-groups-wrapper {
+  <!-- ═══════════════════════════════════════════════════════════
        CONTENT SECURITY POLICY
   ═══════════════════════════════════════════════════════════ -->
   <meta http-equiv="Content-Security-Policy" content="
@@ -611,12 +611,29 @@
     .badge-popular { background:#ffe3e3; color:#c62828; font-size:0.65rem; font-weight:800; padding:3px 9px; border-radius:30px; margin-left:6px; }
     .join-counter { font-size:0.74rem; color:var(--muted); display:flex; align-items:center; gap:5px; margin:2px 0 6px; }
     .groups-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px,1fr)); gap: 26px; margin: 0 0 60px; }
-    /* ADD THIS NEW RULE - makes dynamic wrapper also a grid */
-#dynamic-groups-wrapper {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)) !important;
-  gap: 26px !important;
-}
+    /* Static crawler content + dynamic wrapper both use the same grid layout */
+    #groupsGridContainer .static-groups-grid,
+    #groupsGridContainer #dynamic-groups-wrapper {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)) !important;
+      gap: 26px !important;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    @media (max-width: 768px) {
+      #groupsGridContainer .static-groups-grid,
+      #groupsGridContainer #dynamic-groups-wrapper {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+        gap: 20px !important;
+      }
+    }
+    @media (max-width: 640px) {
+      #groupsGridContainer .static-groups-grid,
+      #groupsGridContainer #dynamic-groups-wrapper {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+    }
     .group-card {
       background: var(--surface); border-radius: var(--radius-lg); overflow: hidden;
       box-shadow: 0 10px 26px -16px rgba(15,23,42,0.14); border: 1px solid var(--line);
@@ -1477,49 +1494,6 @@
 .bulk-code-status { font-size:0.75rem; margin-top:6px; font-weight:700; display:none; }
 .bulk-code-status.ok { color:#166534; display:block; }
 .bulk-code-status.bad { color:#b91c1c; display:block; }
-    /* Make both static and dynamic content use grid layout */
-.static-groups-grid,
-#dynamic-groups-wrapper {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)) !important;
-  gap: 26px !important;
-}
-    /* ============ FORCE GRID LAYOUT FOR BOTH STATIC & DYNAMIC ============ */
-#groupsGridContainer .static-groups-grid,
-#groupsGridContainer #dynamic-groups-wrapper {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)) !important;
-  gap: 26px !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  box-sizing: border-box !important;
-  margin-bottom: 30px !important;
-}
-
-#groupsGridContainer .static-groups-grid .group-card,
-#groupsGridContainer #dynamic-groups-wrapper .group-card {
-  width: 100% !important;
-  max-width: 100% !important;
-  box-sizing: border-box !important;
-  margin: 0 !important;
-}
-
-/* Mobile responsive */
-@media (max-width: 768px) {
-  #groupsGridContainer .static-groups-grid,
-  #groupsGridContainer #dynamic-groups-wrapper {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
-    gap: 20px !important;
-  }
-}
-
-@media (max-width: 640px) {
-  #groupsGridContainer .static-groups-grid,
-  #groupsGridContainer #dynamic-groups-wrapper {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
-  }
-}
     </style>
     <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JQTHYZE215"></script>
@@ -1538,6 +1512,62 @@
     <button id="openModalMainBtn" class="btn-glow"><i class="fas fa-plus"></i> Submit Group</button>
   </div>
 </header>
+<!-- Category landing pages for SEO -->
+<nav aria-label="Browse groups by category" style="max-width:1000px;margin:16px auto;padding:16px 20px;background:#f5f9f7;border-radius:10px;">
+  <details>
+    <summary style="cursor:pointer;font-weight:700;font-size:14px;color:#0a7c4a;list-style:none;">📂 Browse all categories (48 pages)</summary>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:6px 16px;margin-top:14px;font-size:13.5px;">
+      <a href="/travel-groups.html" style="color:#334155;text-decoration:none;">Travel</a>
+      <a href="/shopping-groups.html" style="color:#334155;text-decoration:none;">Shopping Deals</a>
+      <a href="/jobs-freelance-groups.html" style="color:#334155;text-decoration:none;">Jobs & Freelance</a>
+      <a href="/technology-ai-groups.html" style="color:#334155;text-decoration:none;">Technology & AI</a>
+      <a href="/crypto-web3-groups.html" style="color:#334155;text-decoration:none;">Cryptocurrency & Web3</a>
+      <a href="/business-startups-groups.html" style="color:#334155;text-decoration:none;">Business & Startups</a>
+      <a href="/education-learning-groups.html" style="color:#334155;text-decoration:none;">Education & Learning</a>
+      <a href="/social-friendship-groups.html" style="color:#334155;text-decoration:none;">Social & Friendship</a>
+      <a href="/entertainment-memes-groups.html" style="color:#334155;text-decoration:none;">Entertainment & Memes</a>
+      <a href="/gaming-esports-groups.html" style="color:#334155;text-decoration:none;">Gaming & Esports</a>
+      <a href="/health-wellness-groups.html" style="color:#334155;text-decoration:none;">Health & Wellness</a>
+      <a href="/news-politics-groups.html" style="color:#334155;text-decoration:none;">News & Politics</a>
+      <a href="/sports-groups.html" style="color:#334155;text-decoration:none;">Sports</a>
+      <a href="/life-hacks-groups.html" style="color:#334155;text-decoration:none;">Life Hacks</a>
+      <a href="/art-design-photography-groups.html" style="color:#334155;text-decoration:none;">Art / Design / Photography</a>
+      <a href="/music-audio-groups.html" style="color:#334155;text-decoration:none;">Music & Audio</a>
+      <a href="/film-animation-groups.html" style="color:#334155;text-decoration:none;">Film & Animation</a>
+      <a href="/food-cooking-groups.html" style="color:#334155;text-decoration:none;">Food & Cooking</a>
+      <a href="/finance-investment-groups.html" style="color:#334155;text-decoration:none;">Finance & Investment</a>
+      <a href="/science-nature-groups.html" style="color:#334155;text-decoration:none;">Science & Nature</a>
+      <a href="/books-literature-groups.html" style="color:#334155;text-decoration:none;">Books & Literature</a>
+      <a href="/parenting-family-groups.html" style="color:#334155;text-decoration:none;">Parenting & Family</a>
+      <a href="/fashion-beauty-groups.html" style="color:#334155;text-decoration:none;">Fashion & Beauty</a>
+      <a href="/astrology-spirituality-groups.html" style="color:#334155;text-decoration:none;">Astrology & Spirituality</a>
+      <a href="/religion-faith-groups.html" style="color:#334155;text-decoration:none;">Religion & Faith</a>
+      <a href="/pets-animals-groups.html" style="color:#334155;text-decoration:none;">Pets & Animals</a>
+      <a href="/fitness-bodybuilding-groups.html" style="color:#334155;text-decoration:none;">Fitness & Bodybuilding</a>
+      <a href="/mental-health-support-groups.html" style="color:#334155;text-decoration:none;">Mental Health & Support</a>
+      <a href="/language-learning-groups.html" style="color:#334155;text-decoration:none;">Language Learning</a>
+      <a href="/students-study-groups-groups.html" style="color:#334155;text-decoration:none;">Students & Study Groups</a>
+      <a href="/programming-development-groups.html" style="color:#334155;text-decoration:none;">Programming & Development</a>
+      <a href="/cybersecurity-hacking-groups.html" style="color:#334155;text-decoration:none;">Cybersecurity & Hacking</a>
+      <a href="/automobiles-bikes-groups.html" style="color:#334155;text-decoration:none;">Automobiles & Bikes</a>
+      <a href="/real-estate-property-groups.html" style="color:#334155;text-decoration:none;">Real Estate & Property</a>
+      <a href="/marketing-seo-groups.html" style="color:#334155;text-decoration:none;">Marketing & SEO</a>
+      <a href="/stock-market-trading-groups.html" style="color:#334155;text-decoration:none;">Stock Market & Trading</a>
+      <a href="/motivational-self-help-groups.html" style="color:#334155;text-decoration:none;">Motivational & Self Help</a>
+      <a href="/lgbtq-community-groups.html" style="color:#334155;text-decoration:none;">LGBTQ+ & Community</a>
+      <a href="/environment-sustainability-groups.html" style="color:#334155;text-decoration:none;">Environment & Sustainability</a>
+      <a href="/diy-crafts-groups.html" style="color:#334155;text-decoration:none;">DIY & Crafts</a>
+      <a href="/relationships-dating-groups.html" style="color:#334155;text-decoration:none;">Relationships & Dating</a>
+      <a href="/legal-law-groups.html" style="color:#334155;text-decoration:none;">Legal & Law</a>
+      <a href="/government-civil-services-groups.html" style="color:#334155;text-decoration:none;">Government & Civil Services</a>
+      <a href="/medical-doctors-groups.html" style="color:#334155;text-decoration:none;">Medical & Doctors</a>
+      <a href="/architecture-interior-design-groups.html" style="color:#334155;text-decoration:none;">Architecture & Interior Design</a>
+      <a href="/agriculture-farming-groups.html" style="color:#334155;text-decoration:none;">Agriculture & Farming</a>
+      <a href="/anime-manga-groups.html" style="color:#334155;text-decoration:none;">Anime & Manga</a>
+      <a href="/comedy-jokes-groups.html" style="color:#334155;text-decoration:none;">Comedy & Jokes</a>
+    </div>
+  </details>
+</nav>
 <main class="container" role="main" aria-label="Group links directory" itemscope itemtype="https://schema.org/WebPage">
   <div class="hero" itemscope itemtype="https://schema.org/WPHeader">
     <div class="hero-content">
@@ -1551,6 +1581,22 @@
     <div class="trust-stat"><strong id="trustStatNew">…</strong><span>Added This Week</span></div>
     <div class="trust-stat"><strong id="trustStatClicks">…</strong><span>Total Joins</span></div>
   </div>  
+<div class="cross-promo-banner">
+  <div class="cp-text"><i class="fab fa-instagram"></i><span>Looking for creators to follow? Check out <strong>Profileverse</strong> — our directory of top Instagram, Facebook, Twitter/X &amp; YouTube profiles.</span></div>
+  <a href="https://www.profileverse.online" class="cp-btn" target="_blank" rel="noopener">Explore Profileverse →</a>
+</div>
+<button type="button" class="games-promo-banner" id="openGamesBtn">
+  <div class="gp-text"><i class="fas fa-gamepad"></i><span>Need a quick timepass? <strong>Play free games</strong> right here — no download needed.</span></div>
+  <span class="gp-btn">Play Now →</span>
+</button>
+  <button type="button" class="games-promo-banner" id="openPremiumBtn" style="background:linear-gradient(120deg,#7c3aed,#2563eb);">
+  <div class="gp-text"><i class="fas fa-crown"></i><span>Want faster review, a <strong>Verified badge</strong>, or <strong>bulk submissions</strong>? Check our low-cost plans.</span></div>
+  <span class="gp-btn">View Plans →</span>
+</button>
+  <div class="games-dock-wrap">
+  <div class="games-dock-title">🎮 Quick Play — Click any game to launch</div>
+  <div class="games-dock-row" id="gamesDockRow"></div>
+</div>
   <div class="filter-panel">
     <div class="filter-flex">
       <div class="filter-item"><label>Type</label>
@@ -1943,7 +1989,7 @@
   </div>
 
   <div id="groupsGridContainer" class="groups-grid">
-   <!-- ═══ STATIC CRAWLER CONTENT (visible to Googlebot) ═══ -->
+   <!-- ═══ STATIC CRAWLER CONTENT (visible to Googlebot on first paint) ═══ -->
 <div class="static-groups-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; padding: 1.5rem 0; background: #faf9ff; border-radius: 12px; margin: 0 0 30px;">
   <div style="background: #fff; border-radius: 12px; padding: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 1px solid #eee;">
     <h4 style="margin:0 0 0.25rem; font-size: 1.1rem;">JobThiminasi.com</h4>
@@ -1985,6 +2031,7 @@
 <p style="text-align: center; color: #777; padding: 0.5rem; margin: 0 0 20px; font-size: 0.9rem;">
   ⚡ 27+ live communities · Updated daily · <strong>Groupverse</strong>
 </p>
+  </div>
 
   <!-- Pagination: "Load more" appends the next page via loadGroups()'s .range() -->
   <div style="text-align:center;margin:-22px 0 60px;">
@@ -2122,17 +2169,9 @@
         <i class="fas fa-shield-heart"></i> Report abuse
       </a>
       <p style="margin-top:10px;font-size:0.75rem;display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;">
-<!-- FIX: Privacy Policy link -->
-<a href="/privacy-policy.html" style="color:#8294ab;text-decoration:none;font-weight:600">Privacy Policy</a>
-<!-- Create privacy-policy.html or link to a working URL -->
-
-<!-- FIX: Terms link -->
-<a href="/terms.html" style="color:#8294ab;text-decoration:none;font-weight:600">Terms of Use</a>
-<!-- Create terms.html or link to a working URL -->
-
-<!-- FIX: Contact link -->
-<a href="/contact.html" style="color:#8294ab;text-decoration:none;font-weight:600">Contact</a>
-<!-- Create contact.html or link to a working URL -->
+  <a href="/privacy-policy.html" style="color:#8294ab;text-decoration:none;font-weight:600">Privacy Policy</a>
+  <a href="/terms.html" style="color:#8294ab;text-decoration:none;font-weight:600">Terms of Use</a>
+  <a href="/contact.html" style="color:#8294ab;text-decoration:none;font-weight:600">Contact</a>
 </p>
     </p>
     <p style="margin-top:8px;font-size:0.75rem" itemprop="copyrightYear">© 2026 Groupverse · Free Community Directory · All Rights Reserved</p>
@@ -2346,6 +2385,85 @@
      to add a new game later, just add one entry there. Nothing
      here needs to change.
 ════════════════════════════════════════════════════════ -->
+<div id="gamesModal" class="games-modal" role="dialog" aria-modal="true">
+  <div class="games-card">
+    <button class="close-games" id="closeGamesBtn" aria-label="Close"><i class="fas fa-times"></i></button>
+    <h3>🎮 Free Games</h3>
+    <p class="games-subtitle">Pick a game to play — right in your browser, no installs.</p>
+    <div class="games-grid" id="gamesGrid"></div>
+  </div>
+</div>
+<div id="premiumModal" class="advertise-modal" role="dialog" aria-modal="true">
+  <div class="advertise-card">
+    <button class="close-advertise" id="closePremiumBtn" aria-label="Close"><i class="fas fa-times"></i></button>
+
+    <h3>👑 Premium Add-ons</h3>
+    <p class="advertise-subtitle">Low-cost boosts for group owners — pay once via UPI/USDT, then send your payment screenshot on WhatsApp with the plan name.</p>
+
+    <div class="pricing-plans">
+      <div class="pricing-plan">
+        <div class="plan-info">
+          <div class="plan-name">⚡ Priority Review</div>
+          <div class="plan-desc">Skip the queue — your group gets reviewed first</div>
+        </div>
+        <div class="plan-price"><div class="price-main">₹19/$0.20 USDT</div><div class="price-sub">one-time</div></div>
+      </div>
+
+      <div class="pricing-plan popular">
+        <div class="popular-tag">🔥 Most Popular</div>
+        <div class="plan-info">
+          <div class="plan-name">✅ Verified Badge</div>
+          <div class="plan-desc">Blue verified tick next to your group name</div>
+        </div>
+        <div class="plan-price"><div class="price-main">₹49/$0.50 USDT</div><div class="price-sub">one-time</div></div>
+      </div>
+
+      <div class="pricing-plan">
+        <div class="plan-info">
+          <div class="plan-name">📦 Bulk Submission Pack</div>
+          <div class="plan-desc">Submit 10 groups without CAPTCHA/cooldown limits</div>
+        </div>
+        <div class="plan-price"><div class="price-main">₹99/$1 USDT</div><div class="price-sub">10 slots</div></div>
+      </div>
+    </div>
+
+    <div class="payment-section">
+      <h4><i class="fas fa-wallet"></i> Pay with USDT (BEP20 / BSC Network)</h4>
+      <div class="usdt-address-box">
+        <span class="chain-tag">BEP20 · Binance Smart Chain</span>
+        <div class="usdt-address-row">
+          <span class="usdt-address-text" id="premiumUsdtAddress">0xB475E090EbB96853Acfa7118AF39a0b9A6500447</span>
+          <button class="btn-copy-addr" id="premiumCopyAddrBtn" onclick="copyPremiumUsdtAddress()"><i class="fas fa-copy"></i> Copy</button>
+        </div>
+      </div>
+      <div class="usdt-address-box" style="margin-top:14px;">
+        <span class="chain-tag" style="background:#e0f7fa;color:#00796b;">UPI · India</span>
+        <div class="usdt-address-row">
+          <span class="usdt-address-text" id="premiumUpiId">emergencytikets@ptyes</span>
+          <button class="btn-copy-addr" id="premiumCopyUpiBtn" onclick="copyPremiumUpiId()"><i class="fas fa-copy"></i> Copy</button>
+        </div>
+      </div>
+      <div class="qr-section">
+        <p><i class="fas fa-qrcode"></i> Scan to pay with USDT</p>
+        <img id="qrCodeImg" src="/assets/usdt-qr.png" alt="USDT BEP20 Payment QR Code">
+      </div>
+      <div class="qr-section">
+        <p><i class="fas fa-qrcode"></i> Or scan to pay with UPI</p>
+        <img id="upiQrImg" src="/assets/upi-qr.png" alt="UPI Payment QR Code">
+      </div>
+      <div class="advertise-note">
+        <i class="fas fa-info-circle" style="margin-top:2px;flex-shrink:0"></i>
+        <span>After paying, send your payment screenshot + <strong>group name</strong> + <strong>plan chosen</strong> to our WhatsApp. We'll activate your plan manually within 24 hours.</span>
+      </div>
+      <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px;">
+        <p style="font-size:0.8rem;font-weight:700;color:var(--ink-soft);margin-bottom:4px;"><i class="fas fa-headset" style="color:var(--wa)"></i> Send proof on WhatsApp</p>
+        <a href="https://wa.me/919391783528" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(95deg,#25D366,#128C7E);color:white;text-decoration:none;padding:9px 18px;border-radius:40px;font-weight:700;font-size:0.82rem;width:fit-content;">
+          <i class="fab fa-whatsapp"></i> +91 9391783528
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- ════════════════════════════════════════════════════════
      ADVERTISE / PRICING MODAL
 ════════════════════════════════════════════════════════ -->
@@ -2424,7 +2542,7 @@
 
       <div class="qr-section">
         <p><i class="fas fa-qrcode"></i> Scan to pay with USDT</p>
-       <img id="qrCodeImg" src="/assets/usdt-qr.png" alt="USDT BEP20 Payment QR Code">
+        <img id="qrCodeImg" src="/assets/usdt-qr.png" alt="USDT BEP20 Payment QR Code">
       </div>
 
       <div class="qr-section">
@@ -3224,9 +3342,9 @@ function initSupabase() {
     loadTrustStats();
   } catch (e) {
     console.error("Supabase init failed:", e);
-    var container = document.getElementById("groupsGridContainer");
-    if (container) {
-      container.innerHTML =
+    var wrapper = getDynamicWrapper();
+    if (wrapper) {
+      wrapper.innerHTML =
         '<div class="empty-state">' +
         '<i class="fas fa-plug fa-2x"></i>' +
         '<p>Could not connect to the database. Check your Supabase key.</p>' +
@@ -3274,38 +3392,41 @@ async function loadTrustStats() {
     if (elClicks) elClicks.textContent = totalClicks + "+";
   } catch (e) { console.warn("loadTrustStats failed:", e); }
 }
-async function loadGroups() {
-  if (!supabaseClient) return;
-  
+function getDynamicWrapper() {
+  // Creates (once) or returns the wrapper that holds live/dynamic group
+  // cards. The static crawler content in #groupsGridContainer is NEVER
+  // touched or removed by this function — it stays in the DOM for SEO
+  // and is simply pushed below the live results once they load.
   var container = document.getElementById("groupsGridContainer");
-  if (!container) return;  
-  // Create a dynamic wrapper if it doesn't exist (keeps static content intact)
-  var dynamicWrapper = document.getElementById("dynamic-groups-wrapper");
-  if (!dynamicWrapper) {
-    dynamicWrapper = document.createElement("div");
-    dynamicWrapper.id = "dynamic-groups-wrapper";
-       // ADD THESE LINES - ensure grid layout
-    dynamicWrapper.style.display = "grid";
-    dynamicWrapper.style.gridTemplateColumns = "repeat(auto-fill, minmax(330px, 1fr))";
-    dynamicWrapper.style.gap = "26px";
-    // Insert after static content
+  if (!container) return null;
+  var wrapper = document.getElementById("dynamic-groups-wrapper");
+  if (!wrapper) {
+    wrapper = document.createElement("div");
+    wrapper.id = "dynamic-groups-wrapper";
     var staticContent = container.querySelector(".static-groups-grid");
-    if (staticContent) {
-      staticContent.after(dynamicWrapper);
+    var staticCaption = staticContent ? staticContent.nextElementSibling : null;
+    if (staticCaption) {
+      staticCaption.after(wrapper);
+    } else if (staticContent) {
+      staticContent.after(wrapper);
     } else {
-      container.appendChild(dynamicWrapper);
+      container.appendChild(wrapper);
     }
   }
-  
-  // Show loading state inside the dynamic wrapper only
-  dynamicWrapper.innerHTML =
-    '<div class="loading-spinner">' +
-    '<i class="fas fa-spinner fa-pulse"></i>Loading communities…' +
-    '</div>';
+  return wrapper;
+}
 
-  groupsOffset = 0;
+async function loadGroups() {
+  if (!supabaseClient) return;
+  var wrapper = getDynamicWrapper();
+  if (wrapper) {
+    wrapper.innerHTML =
+      '<div class="loading-spinner">' +
+      '<i class="fas fa-spinner fa-pulse"></i>Loading communities…' +
+      '</div>';
+  }
+  groupsOffset  = 0;
   groupsHasMore = true;
-  
   try {
     var result = await supabaseClient
       .from("groups")
@@ -3318,18 +3439,20 @@ async function loadGroups() {
     if (result.error) throw result.error;
     groupsLibrary = result.data || [];
     groupsHasMore = groupsLibrary.length === GROUPS_PAGE_SIZE;
-    groupsOffset = groupsLibrary.length;
+    groupsOffset  = groupsLibrary.length;
+    // FIX: Use applyFilters() not applyFiltersFromURL()
     applyFilters();
     updateLoadMoreButton();
   } catch (e) {
     console.error("loadGroups:", e);
     showToast("Error loading groups", true);
-    if (dynamicWrapper) 
-    dynamicWrapper.innerHTML =
-      '<div class="empty-state">' +
-      '<i class="fas fa-triangle-exclamation fa-2x"></i>' +
-      '<p>Could not load communities. Please refresh.</p>' +
-      '</div>';
+    if (wrapper) {
+      wrapper.innerHTML =
+        '<div class="empty-state">' +
+        '<i class="fas fa-triangle-exclamation fa-2x"></i>' +
+        '<p>Could not load communities. Please refresh.</p>' +
+        '</div>';
+    }
   }
 }
 // ---- Load more — fetches the next page and appends to groupsLibrary ----
@@ -3403,91 +3526,107 @@ function getDescriptionText(g) {
   return fallbacks[g.category] || "Join this active community to connect, share, and stay updated.";
 }
 function renderGroups(list) {
-  var container = document.getElementById("groupsGridContainer");
-  if (!container) {
-    console.error("Container not found");
-    return;
-  }
+  var container = getDynamicWrapper();
+  if (!container) return;
 
-  // Remove existing dynamic wrapper if any
-  var oldWrapper = document.getElementById("dynamic-groups-wrapper");
-  if (oldWrapper) {
-    oldWrapper.remove();
-  }
-
-  // Create fresh dynamic wrapper
-  var dynamicWrapper = document.createElement("div");
-  dynamicWrapper.id = "dynamic-groups-wrapper";
-  
-  // Apply styles directly
-  dynamicWrapper.style.display = "grid";
-  dynamicWrapper.style.gridTemplateColumns = "repeat(auto-fill, minmax(330px, 1fr))";
-  dynamicWrapper.style.gap = "26px";
-  dynamicWrapper.style.width = "100%";
-  dynamicWrapper.style.maxWidth = "100%";
-  dynamicWrapper.style.boxSizing = "border-box";
-
-  // Insert after static content
-  var staticContent = container.querySelector(".static-groups-grid");
-  if (staticContent) {
-    staticContent.after(dynamicWrapper);
-  } else {
-    container.appendChild(dynamicWrapper);
-  }
-
-  // Handle empty state
-  if (!list || !Array.isArray(list) || list.length === 0) {
-    dynamicWrapper.innerHTML = `
-      <div class="empty-state">
-        <i class="fas fa-users-slash fa-3x"></i>
-        <p>No groups match your filters.</p>
-      </div>
-    `;
+  if (!list.length) {
+    container.innerHTML =
+      '<div class="empty-state">' +
+      '<i class="fas fa-users-slash fa-3x"></i>' +
+      '<p>No groups match your filters.</p>' +
+      '<button id="emptyAddBtn" class="btn-glow" style="margin-top:15px">' +
+      '<i class="fas fa-plus"></i> Suggest a group</button>' +
+      '</div>';
+    var eb = document.getElementById("emptyAddBtn");
+    if (eb) eb.addEventListener("click", openModal);
     var cd = document.getElementById("resultCountDisplay");
     if (cd) cd.innerText = "0 communities";
     return;
   }
 
-  // Build cards
-  var cardsHtml = "";
-  list.forEach(function(g, i) {
+  container.innerHTML = list.map(function(g, i) {
     var m = getPlatformMeta(g.platform_type);
+   var tagPills = (g.tags && g.tags.length)
+      ? g.tags.map(function(t) {
+          return '<span class="tag-pill"><i class="fas fa-hashtag"></i> ' + escapeHtml(t) + '</span>';
+        }).join("")
+      : "";
+    var tagsDropdownHtml = (g.tags && g.tags.length)
+      ? '<div class="tags-dropdown-wrap">' +
+          '<button type="button" class="tags-toggle-btn tags-toggle" aria-label="Show tags"><i class="fas fa-tags"></i> Tags <i class="fas fa-chevron-down"></i></button>' +
+          '<div class="tags-dropdown-panel">' + tagPills + '</div>' +
+        '</div>'
+      : "";
     var delay = Math.min(i, 11) * 0.045;
-    
-    cardsHtml += `
-      <div class="group-card" style="animation-delay:${delay}s">
-        <div class="card-header">
-          <div class="platform-badge">${m.icon}</div>
-          <div class="group-title">
-            <h4>${escapeHtml(g.name)}</h4>
-            <div class="group-meta">
-              <span><i class="fas fa-globe"></i> ${escapeHtml(g.country || "Worldwide")}</span>
-              <span><i class="fas fa-language"></i> ${escapeHtml(g.language || "English")}</span>
-              <span class="badge-category">${escapeHtml(g.category || "General")}</span>
-              <span class="badge-type">${m.badge}</span>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="description">${escapeHtml(getDescriptionText(g))}</div>
-          <span class="join-counter"><i class="fas fa-users"></i> ${g.click_count || 0} joined</span>
-          <div class="card-actions">
-            <a href="${escapeAttr(g.link)}" target="_blank" rel="noopener noreferrer" class="join-link-btn ${m.cls}" data-id="${escapeAttr(g.id)}">${m.label}</a>
-            <button class="copy-icon-btn" data-link="${escapeAttr(g.link)}" title="Copy link"><i class="fas fa-copy"></i></button>
-          </div>
-        </div>
-      </div>
-    `;
+
+    // User-submitted logo support
+    var isNewSubmission = g.created_at ? (Date.now() - new Date(g.created_at).getTime()) < (3 * 24 * 60 * 60 * 1000) : false;
+    var OLD_WA_ICON = '<svg viewBox="0 0 175.216 175.552" width="34" height="34" xmlns="http://www.w3.org/2000/svg"><path fill="#25D366" d="M87.4 25.5c-34.1 0-61.8 27.7-61.8 61.8 0 10.9 2.9 21.5 8.3 30.8l-8.8 32.2 33-8.7c8.9 4.9 19 7.5 29.3 7.5h0c34.1 0 61.8-27.7 61.8-61.8 0-16.5-6.4-32-18.1-43.7-11.7-11.7-27.2-18.1-43.7-18.1z"/><path fill="#fff" d="M69 51.6c-1.2-2.7-2.5-2.8-3.7-2.8h-3.1c-1.1 0-2.8.4-4.3 2-1.5 1.6-5.6 5.5-5.6 13.4s5.8 15.5 6.6 16.6c.8 1.1 11.2 17.9 27.6 24.4 13.6 5.4 16.4 4.3 19.4 4 3-.3 9.6-3.9 11-7.7 1.3-3.8 1.3-7 .9-7.7-.4-.7-1.5-1.1-3.2-2-1.7-.8-9.6-4.7-11.1-5.3-1.5-.5-2.6-.8-3.6.8-1.1 1.7-4.2 5.3-5.2 6.4-1 1.1-1.9 1.2-3.5.4-1.7-.8-7.1-2.6-13.5-8.3-5-4.4-8.3-9.9-9.3-11.6-1-1.7-.1-2.6.7-3.5.7-.7 1.7-1.9 2.5-2.9.8-1 1.1-1.7 1.6-2.9.5-1.1.3-2.2-.1-3.1-.4-.8-3.6-9.1-5.1-12.4z"/></svg>';
+    var badgeHtml = '';
+if (g.logo_url) {
+  badgeHtml =
+    '<div class="platform-badge" style="padding:0;overflow:hidden;">' +
+      '<img src="' + escapeAttr(g.logo_url) + '" alt="' + escapeHtml(g.name) + ' logo" loading="lazy" ' +
+           'style="width:100%;height:100%;object-fit:contain;background:#fff;" ' +
+           'onerror="window.handleLogoErr(this)" data-fallback-icon="' + escapeAttr(m.icon) + '" />' +
+    '</div>';
+} else if (g.platform_type === "whatsapp_group" || g.platform_type === "whatsapp_channel") {
+  badgeHtml = '<div class="platform-badge" style="background:#fff;border:2px solid #25D366;">' + OLD_WA_ICON + '</div>';
+} else {
+  badgeHtml = '<div class="platform-badge">' + m.icon + '</div>';
+}
+    // ---- New / Popular badges + join counter ----
+    var isNew = g.created_at ? (Date.now() - new Date(g.created_at).getTime()) < (3 * 24 * 60 * 60 * 1000) : false;
+    var clickCount = g.click_count || 0;
+    var isPopular  = clickCount >= 20;
+    var statusBadgeHtml =
+  (isNew         ? '<span class="badge-new">🆕 New</span>' : '') +
+  (isPopular     ? '<span class="badge-popular">🔥 Popular</span>' : '') +
+  (g.is_verified ? '<span class="badge-verified"><i class="fas fa-check-circle"></i> Verified</span>' : ''); // NEW
+    var joinCounterHtml = '<span class="join-counter"><i class="fas fa-users"></i> ' + clickCount + ' joined</span>';
+    return (
+      '<div class="group-card" style="animation-delay:' + delay + 's">' +
+        '<div class="card-header">' +
+          badgeHtml +
+          '<div class="group-title">' +
+            '<h4>' + escapeHtml(g.name) + '</h4>' +
+            '<div class="group-meta">' +
+              '<span><i class="fas fa-globe"></i> ' + escapeHtml(g.country || "Worldwide") + '</span>' +
+              '<span><i class="fas fa-language"></i> ' + escapeHtml(g.language || "English") + '</span>' +
+              '<span class="badge-category">' + escapeHtml(g.category || "General") + '</span>' +
+              '<span class="badge-type">' + m.badge + '</span>' + statusBadgeHtml +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="card-body">' +
+          '<div class="description">' + escapeHtml(getDescriptionText(g)) + '</div>' +
+          joinCounterHtml +
+          '<div class="card-actions">' +
+            tagsDropdownHtml +
+            '<a href="' + escapeAttr(g.link) + '" target="_blank" rel="noopener noreferrer" class="join-link-btn ' + m.cls + '" data-id="' + escapeAttr(g.id) + '">' + m.label + '</a>' +
+            '<button class="copy-icon-btn" data-link="' + escapeAttr(g.link) + '" title="Copy link" aria-label="Copy link"><i class="fas fa-copy"></i></button>' +
+           '<button class="copy-icon-btn report-btn" data-group-id="' + escapeAttr(g.id) + '" title="Report this group" aria-label="Report abuse" style="color:#b91c1c;"><i class="fas fa-flag"></i></button>' +
+          '</div>' +
+        '</div>' +
+      '</div>'
+    );
+  }).join("");
+
+  container.querySelectorAll(".copy-icon-btn[data-link]").forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      var link = btn.getAttribute("data-link");
+      navigator.clipboard.writeText(link).then(function() {
+        btn.classList.add("copied");
+        btn.innerHTML = '<i class="fas fa-check"></i>';
+        showToast("✅ Link copied!");
+        setTimeout(function() {
+          btn.classList.remove("copied");
+          btn.innerHTML = '<i class="fas fa-copy"></i>';
+        }, 1600);
+      }).catch(function() { showToast("❌ Could not copy", true); });
+    });
   });
-
-  dynamicWrapper.innerHTML = cardsHtml;
-
-  // Update count
-  var cd = document.getElementById("resultCountDisplay");
-  if (cd) cd.innerText = list.length + (list.length !== 1 ? " communities" : " community") + " listed";
-
-  // Wire copy buttons
-  dynamicWrapper.querySelectorAll(".copy-icon-btn[data-link]").forEach(function(btn) {
+  container.querySelectorAll(".copy-icon-btn[data-link]").forEach(function(btn) {
     btn.addEventListener("click", function() {
       var link = btn.getAttribute("data-link");
       navigator.clipboard.writeText(link).then(function() {
@@ -3502,17 +3641,55 @@ function renderGroups(list) {
     });
   });
 
-  // Wire join buttons
-  dynamicWrapper.querySelectorAll(".join-link-btn").forEach(function(btn) {
+  container.querySelectorAll(".report-btn").forEach(function(btn) {
     btn.addEventListener("click", function() {
-      var gid = btn.getAttribute("data-id");
-      if (gid && supabaseClient) {
-        supabaseClient.rpc("increment_click_count", { row_id: gid }).catch(function() {});
-      }
+      var groupId = btn.getAttribute("data-group-id");
+      btn.disabled = true;
+      fetch("https://imnzgzusnghppgbgfdsh.supabase.co/functions/v1/report-group", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImltbnpnenVzbmdocHBnYmdmZHNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNTYyNDIsImV4cCI6MjA5NzYzMjI0Mn0.XIMHM7lyUJM-dbmrIIkM7eWIzu7znrKxjHkfU-XhJLk"
+  },
+  body: JSON.stringify({ groupId: groupId, reason: "Reported via directory" })
+})
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        if (data.error) {
+          showToast(data.error, true);
+        } else {
+          showToast("✅ Thanks — this group has been reported.");
+        }
+      })
+      .catch(function() { showToast("❌ Could not submit report", true); })
+      .finally(function() { btn.disabled = false; });
     });
   });
-
-  console.log("✅ Rendered " + list.length + " groups in grid");
+  container.querySelectorAll(".tags-toggle").forEach(function(btn) {
+    btn.addEventListener("click", function(e) {
+      e.stopPropagation();
+      var panel = btn.nextElementSibling;
+      var isOpen = panel.classList.contains("open");
+      document.querySelectorAll(".tags-dropdown-panel.open").forEach(function(p) { p.classList.remove("open"); });
+      document.querySelectorAll(".tags-toggle-btn.open").forEach(function(b) { b.classList.remove("open"); });
+      if (!isOpen) { panel.classList.add("open"); btn.classList.add("open"); }
+    });
+  });
+  document.addEventListener("click", function() {
+    document.querySelectorAll(".tags-dropdown-panel.open").forEach(function(p) { p.classList.remove("open"); });
+    document.querySelectorAll(".tags-toggle-btn.open").forEach(function(b) { b.classList.remove("open"); });
+  });
+  container.querySelectorAll(".join-link-btn").forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      var gid = btn.getAttribute("data-id");
+      if (!gid || !supabaseClient) return;
+      supabaseClient.rpc("increment_click_count", { row_id: gid }).then(function(res) {
+        if (res.error) console.warn("click tracking failed:", res.error);
+      });
+    });
+  });
+  var cd = document.getElementById("resultCountDisplay");
+  if (cd) cd.innerText = list.length + (list.length !== 1 ? " communities" : " community") + " listed";
 }
 function applyFiltersFromURL() {
   var params = new URLSearchParams(window.location.search);
