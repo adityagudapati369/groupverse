@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.groupverse.co.in/sitemap.xml
+Sitemap: https://groupverse.co.in/sitemap.xml
