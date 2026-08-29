@@ -2,367 +2,415 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://groupverse.co.in/</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/whatsapp-group-links.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/telegram-group-links.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/latest-group-links.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
+        <loc>https://groupverse.co.in/upsc-groups.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.85</priority>
+    </url>
+    <url>
+        <loc>https://groupverse.co.in/neet-groups.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.85</priority>
+    </url>
+    <url>
+        <loc>https://groupverse.co.in/jee-iit-groups.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.85</priority>
+    </url>
+    <url>
+        <loc>https://groupverse.co.in/ssc-bank-exams-groups.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.85</priority>
+    </url>
+    <url>
+        <loc>https://groupverse.co.in/gate-exam-groups.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.85</priority>
+    </url>
+    <url>
+        <loc>https://groupverse.co.in/cat-mba-groups.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.85</priority>
+    </url>
+    <url>
+        <loc>https://groupverse.co.in/ctet-teaching-groups.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.85</priority>
+    </url>
+    <url>
+        <loc>https://groupverse.co.in/defence-nda-cds-groups.html</loc>
+        <lastmod>2026-08-29</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.85</priority>
+    </url>
+    <url>
         <loc>https://groupverse.co.in/agriculture-farming-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/anime-manga-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/architecture-interior-design-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/art-design-photography-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/astrology-spirituality-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/automobiles-bikes-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/books-literature-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/business-startups-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/comedy-jokes-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/crypto-web3-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/cybersecurity-hacking-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/diy-crafts-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/education-learning-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/entertainment-memes-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/environment-sustainability-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/fashion-beauty-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/film-animation-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/finance-investment-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/fitness-bodybuilding-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/food-cooking-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/gaming-esports-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/government-civil-services-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/health-wellness-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/jobs-freelance-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/language-learning-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/legal-law-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/lgbtq-community-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/life-hacks-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/marketing-seo-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/medical-doctors-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/mental-health-support-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/motivational-self-help-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/music-audio-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/news-politics-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/parenting-family-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/pets-animals-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/programming-development-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/real-estate-property-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/relationships-dating-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/religion-faith-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/science-nature-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/shopping-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/social-friendship-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/sports-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/stock-market-trading-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/students-study-groups-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/technology-ai-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/travel-groups.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/contact.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.3</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/terms.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.3</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/privacy-policy.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.3</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/about.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.4</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/faq.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.4</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/how-to-join.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.4</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/advertise.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.4</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/disclaimer.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.4</priority>
     </url>
     <url>
         <loc>https://groupverse.co.in/cookie-policy.html</loc>
-        <lastmod>2026-08-24</lastmod>
+        <lastmod>2026-08-29</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.4</priority>
     </url>
