@@ -521,8 +521,26 @@
       box-shadow: 0 6px 16px -4px rgba(37,211,102,0.4); font-size: 0.92rem;
     }
     .btn-glow:hover { transform: translateY(-2px); box-shadow: 0 16px 28px -10px rgba(42,171,238,0.45); background-position: 100% 50%; }
-    .btn-glow:active { transform: translateY(0); }
+    .btn-glow:active { transform: translateY(0) scale(0.95); box-shadow: 0 4px 10px -4px rgba(37,211,102,0.4); }
     :focus-visible { outline: 2px solid var(--wa-deep); outline-offset: 3px; border-radius: 4px; }
+
+    /* ---- Skeleton loading cards (replaces plain spinner text for perceived speed) ---- */
+    @keyframes skeletonShimmer { 0% { background-position: -300px 0; } 100% { background-position: 300px 0; } }
+    .skeleton-card {
+      background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--line);
+      padding: 20px 22px; height: 210px; display: flex; flex-direction: column; gap: 14px;
+    }
+    .skeleton-line {
+      border-radius: 8px; background: linear-gradient(90deg, #eef1f6 25%, #f7f9fc 37%, #eef1f6 63%);
+      background-size: 600px 100%; animation: skeletonShimmer 1.4s ease-in-out infinite;
+    }
+    .skeleton-line.avatar { width: 52px; height: 52px; border-radius: 18px; }
+    .skeleton-line.title { width: 60%; height: 18px; }
+    .skeleton-line.text { width: 100%; height: 12px; }
+    .skeleton-line.text.short { width: 75%; }
+    .skeleton-line.btn { width: 100%; height: 40px; border-radius: 60px; margin-top: auto; }
+    .skeleton-row { display: flex; gap: 14px; align-items: center; }
+    .skeleton-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px,1fr)); gap: 26px; grid-column: 1/-1; }
 
     /* ---- Hero ---- */
     .hero {
@@ -2480,11 +2498,11 @@
       </div>
       <div class="qr-section">
         <p><i class="fas fa-qrcode"></i> Scan to pay with USDT</p>
-        <img id="qrCodeImg" src="/assets/usdt-qr.png" alt="USDT BEP20 Payment QR Code">
+        <img id="premiumQrCodeImg" src="/assets/usdt-qr.png" alt="USDT BEP20 Payment QR Code">
       </div>
       <div class="qr-section">
         <p><i class="fas fa-qrcode"></i> Or scan to pay with UPI</p>
-        <img id="upiQrImg" src="/assets/upi-qr.png" alt="UPI Payment QR Code">
+        <img id="premiumUpiQrImg" src="/assets/upi-qr.png" alt="UPI Payment QR Code">
       </div>
       <div class="advertise-note">
         <i class="fas fa-info-circle" style="margin-top:2px;flex-shrink:0"></i>
@@ -3455,9 +3473,17 @@ async function loadGroups() {
   if (!supabaseClient) return;
   var wrapper = getDynamicWrapper();
   if (wrapper) {
+    var skeletonCard =
+      '<div class="skeleton-card">' +
+      '<div class="skeleton-row"><div class="skeleton-line avatar"></div>' +
+      '<div class="skeleton-line title"></div></div>' +
+      '<div class="skeleton-line text"></div>' +
+      '<div class="skeleton-line text short"></div>' +
+      '<div class="skeleton-line btn"></div>' +
+      '</div>';
     wrapper.innerHTML =
-      '<div class="loading-spinner">' +
-      '<i class="fas fa-spinner fa-pulse"></i>Loading communities…' +
+      '<div class="skeleton-grid">' +
+      skeletonCard.repeat(6) +
       '</div>';
   }
   groupsOffset  = 0;
